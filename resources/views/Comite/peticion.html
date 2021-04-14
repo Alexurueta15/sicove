@@ -1,0 +1,218 @@
+
+    <div class="page-header header-filter" data-parallax="true"
+    style="background-image: url('./material-kit-master/assets/img/bgMorelos2.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 ml-auto mr-auto">
+                <div class="brand text-center">
+                    <h1>Comité Vecinal</h1>
+                    <h3 class="title text-center">Prototipo</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main main-raised">
+    <div class="container">
+
+        <h2 style="padding-top: 20px;" class="title text-primary text-center">Solicitudes de Apoyo</h2>
+        <button class="btn btn-rose btn-round btn-md" data-toggle="modal" data-target="#crearModal"> <i
+                class="material-icons">add_circle_outline</i> Registrar nueva solicitud de apoyo
+        </button>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-warning">
+                        <div class="card-icon">
+                            <h4 class="card-title">Drenaje dañado</h4>
+                            <p class="category">Emiliano Zapata</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">A lo largo de la Av. Revolución se ha reportado la presencia de
+                            una fuga de agua debido a un drenaje dañado.</p>
+                        <a href="./comentario.html" class="btn btn-primary">Revisar</a>
+                        <btn data-toggle="modal" data-target="#editarModal" class="btn btn-warning">Editar</btn>
+                        <btn data-toggle="modal" data-target="#borrarModal" class="btn btn-danger">Eliminar</btn>                        </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-warning">
+                        <div class="card-icon">
+                            <h4 class="card-title">Cortes de luz constantes</h4>
+                            <p class="category">Temixco</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">En estos últimos días se han presentado diversos cortes de
+                            luz en diversas localidades del municipio de Temixco.</p>
+                        <a href="./comentario.html" class="btn btn-primary">Revisar</a>
+                        <btn data-toggle="modal" data-target="#editarModal" class="btn btn-warning">Editar</btn>
+                        <btn data-toggle="modal" data-target="#borrarModal" class="btn btn-danger">Eliminar</btn>                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-warning">
+                        <div class="card-icon">
+                            <h4 class="card-title">Drenaje dañado</h4>
+                            <p class="category">Emiliano Zapata</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">A lo largo de la Av. Revolución se ha reportado la presencia de
+                            una fuga de agua debido a un drenaje dañado.</p>
+                        <a href="./comentario.html" class="btn btn-primary">Revisar</a>
+                        <btn data-toggle="modal" data-target="#editarModal" class="btn btn-warning">Editar</btn>
+                        <btn data-toggle="modal" data-target="#borrarModal" class="btn btn-danger">Eliminar</btn>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-warning">
+                        <div class="card-icon">
+                            <h4 class="card-title">Cortes de luz constantes</h4>
+                            <p class="category">Temixco</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">En estos últimos días se han presentado diversos cortes de
+                            luz en diversas localidades del municipio de Temixco.</p>
+                        <a href="./comentario.html" class="btn btn-primary">Revisar</a>
+                        <btn data-toggle="modal" data-target="#editarModal" class="btn btn-warning">Editar</btn>
+                        <btn data-toggle="modal" data-target="#borrarModal" class="btn btn-danger">Eliminar</btn>                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CREAR MODAL -->
+
+<div style="margin-top: 80px;" class="modal fade" id="crearModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h2 class="modal-title text-primary title" id="exampleModalLabel">Registrar nueva solicitud de apoyo</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="" method="post">
+
+                <div class="modal-body">
+                    <h3 class="subtitle text-primary">Datos de la solicitud</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="inputEmail4">Descripción</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">question_answer</i>
+                                    </span>
+                                </div>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="falloBtn" type="button" class="btn btn-primary btn-link"
+                        data-dismiss="modal">Cancelar</button>
+                    <button id="exitoBtn" type="submit" class="btn btn-primary btn-round"><i
+                            class="material-icons">check</i>Registrar solicitud</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- FIN CREAR MODAL -->
+
+<!-- EDITAR MODAL -->
+
+<div style="margin-top: 80px;" class="modal fade" id="editarModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h2 class="modal-title text-primary title" id="exampleModalLabel">Editar solicitud de apoyo</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="" method="post">
+
+                <div class="modal-body">
+                    <h3 class="subtitle text-primary">Datos de la solicitud</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="inputEmail4">Descripción</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">question_answer</i>
+                                    </span>
+                                </div>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="exitoBtn" class="btn btn-primary btn-round"><i
+                            class="material-icons">check</i>Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- FIN EDITAR MODAL -->
+
+<!-- ELIMINAR MODAL -->
+
+<div style="margin-top: 80px;" class="modal fade" id="borrarModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-primary title" id="exampleModalLabel">Eliminar solicitud de apoyo</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro que desea eliminar este registro?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">Cancelar</button>
+                <button id="exitoBtn" type="submit" data-dismiss="modal" class="btn btn-danger btn-round"><i
+                        class="material-icons">delete_forever</i>
+                    Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FIN ELIMINAR MODAL-->
+
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
