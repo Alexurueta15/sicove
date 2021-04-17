@@ -8,6 +8,13 @@ app.controller('mainCtrl',['$scope','$http','$window', function ($scope,$http,$w
 	  };
 
 	  $scope.comiteId={};
+
+	  $scope.cerrarSesion = function(){
+		  
+		localStorage.removeItem('token');
+		$window.location.href = "#/"; 	
+	}
+
 	  
 }]);
 

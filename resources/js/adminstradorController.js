@@ -1,5 +1,5 @@
 app.controller('administradorController', function ($scope, $http, APP_DEFAULT_URL, $window) {
-	$scope.token="eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQWRtaW5pc3RyYWRvciIsInVzZXJuYW1lIjoic2ljb3ZlQGxvY2FsaG9zdC5jb20iLCJzdWIiOiJzaWNvdmVAbG9jYWxob3N0LmNvbSIsImlhdCI6MTYxODI5MTc0MiwiZXhwIjoxNjE4MzA5NzQyfQ.2cHCyp0FDRD0-BVPrjk6ejIA8GSxDc5L-r9gtUU8PyE";
+	$scope.token= JSON.parse($window.localStorage.getItem("token"));
 				  
 	$scope.registrarNuevoAdministrador = function () {
 		
@@ -41,7 +41,6 @@ app.controller('administradorController', function ($scope, $http, APP_DEFAULT_U
 	$scope.getAdministradores = function () {
 
 		
-
 		$http.get(APP_DEFAULT_URL.url + "admin",{
 			headers: {
 			   

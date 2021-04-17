@@ -1,5 +1,5 @@
 app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $window) {
-	$scope.token="eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiRW5sYWNlIiwidXNlcm5hbWUiOiJhbGFuQGdtYWlsLmNvbSIsInN1YiI6ImFsYW5AZ21haWwuY29tIiwiaWF0IjoxNjE4MjkxNzc3LCJleHAiOjE2MTgzMDk3Nzd9.si5mi9p9Kcon2V9FYjhVAolDekSKLby7yQcECRKWiYk";
+	$scope.token=JSON.parse($window.localStorage.getItem("token"));
     $scope.comite={};
 	
     /*-----CRUD-----*/
@@ -8,7 +8,6 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 		$http.post(APP_DEFAULT_URL.url + "enlace/committee", $scope.comiteData, {
 			headers: {
                
-         //    Authorization: localStorage.getItem("token") === null ? '': "Bearer " + localStorage.getItem("token"),
                 Accept:"*/*",
                 "Content-Type":"application/json",
                 Authorization: "Bearer "+ $scope.token,
@@ -68,7 +67,6 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 		$http.get(APP_DEFAULT_URL.url + "enlace/committee",{
 			headers: {
 			   
-		 //    Authorization: localStorage.getItem("token") === null ? '': "Bearer " + localStorage.getItem("token"),
 				Accept:"*/*",
 				"Content-Type":"application/json",
 				Authorization: "Bearer "+ $scope.token,
@@ -108,7 +106,6 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 
 			headers: {
 			   
-				//    Authorization: localStorage.getItem("token") === null ? '': "Bearer " + localStorage.getItem("token"),
 					   Accept:"*/*",
 					   "Content-Type":"application/json",
 					   Authorization: "Bearer "+ $scope.token,
@@ -177,7 +174,6 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 			url: APP_DEFAULT_URL.url + "enlace/committee",
 			data: $scope.borrar,
 			headers: {
-			  //    Authorization: localStorage.getItem("token") === null ? '': "Bearer " + localStorage.getItem("token"),
 			  Accept:"*/*",
 			  "Content-Type":"application/json",
 			  Authorization: "Bearer "+ $scope.token,
@@ -213,6 +209,8 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 	};
 
 
+	  /*-----CRUD MIEMBRO COMITE-----*/
+
     $scope.AgregarMiembro = function (comite) {
 
 		$window.localStorage.setItem('comite', JSON.stringify(comite));
@@ -222,41 +220,40 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 
 	$scope.getMiembros = function () {
 
-		var datosComite = JSON.parse($window.localStorage.getItem("comite"));
-		
+		$scope.datosComiteLocal = JSON.parse($window.localStorage.getItem("comite"));
+		console.log($scope.datosComiteLocal);
 
-		$http.get(APP_DEFAULT_URL.url + "enlace/committee/one",datosComite,{
-			headers: {
+		$scope.comiteConsultado = {
+			"id": $scope.datosComiteLocal.id
+		}
+
+		console.log($scope.comiteConsultado);
+	
+
+		/*--------*/ 
+
+		var header={
 			   
-				Accept:"*/*",
-				"Content-Type":"application/json",
-				Authorization: "Bearer "+ $scope.token,
-				"Access-Control-Allow-Origin":  "http://localhost:8080",
-				"Access-Control-Allow-Methods": "*",
-				"Access-Control-Allow-Headers": "Content-Type",
-				"Access-Control-Allow-Headers": "Authorization"
-			}
+			Accept:"*/*",
+			"Content-Type":"application/json",
+			Authorization: "Bearer "+ $scope.token,
+			"Access-Control-Allow-Origin":  "http://localhost:8080",
+			"Access-Control-Allow-Methods": "*",
+			"Access-Control-Allow-Headers": "Content-Type",
+			"Access-Control-Allow-Headers": "Authorization"
+		}
+		$http.post(APP_DEFAULT_URL.url + "enlace/committee/one",$scope.comiteConsultado,{
+			headers: header
 		}).then(function (response) {
-            //console.log(response.data)
-			$scope.comites = response.data;
-			$scope.miembros = response.date.members;
+			
 			console.log("miembros");
 			console.log(response);
 		});
 
+		/*--------*/ 
+
 		$http.get(APP_DEFAULT_URL.url + "enlace/committee/positions",{
-			headers: {
-			   
-		 //    Authorization: localStorage.getItem("token") === null ? '': "Bearer " + localStorage.getItem("token"),
-				Accept:"*/*",
-				"Content-Type":"application/json",
-				Authorization: "Bearer "+ $scope.token,
- 
-				"Access-Control-Allow-Origin":  "http://localhost:8080",
-				"Access-Control-Allow-Methods": "*",
-				"Access-Control-Allow-Headers": "Content-Type",
-				"Access-Control-Allow-Headers": "Authorization"
-			}
+			headers: header
 		}).then(function (response) {
 			console.log("esto es una prueba _--------------")
             console.log(response.data)
@@ -303,7 +300,6 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 		$http.post(APP_DEFAULT_URL.url + "enlace/committee/member", $scope.data, {
 			headers: {
                
-         //    Authorization: localStorage.getItem("token") === null ? '': "Bearer " + localStorage.getItem("token"),
                 Accept:"*/*",
                 "Content-Type":"application/json",
                 Authorization: "Bearer "+ $scope.token,
@@ -371,33 +367,6 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 		console.log($scope.MiembroData);
 	}
 
-	$scope.getCommittees = function () {
-		$http.get(APP_DEFAULT_URL.url + "enlace/committee",{
-			headers: {
-			   
-				Accept:"*/*",
-				"Content-Type":"application/json",
-				Authorization: "Bearer "+ $scope.token,
- 
-				"Access-Control-Allow-Origin":  "http://localhost:8080",
-				"Access-Control-Allow-Methods": "*",
-				"Access-Control-Allow-Headers": "Content-Type",
-				"Access-Control-Allow-Headers": "Authorization"
-			}
-		}).then(function (response) {
-            console.log(response.data)
-			$scope.comites = response.data;
-			
-			var comites = $scope.comites;
-			comites.forEach(element => {
-				if($scope.MiembroData.members[0].position.position == element.position){
-					$scope.MiembroData.members[0].position.id=element.id; 
-				}
-			});
-		});
-	};
-
-	
 
 
 	$scope.EditarMiembro = function (miembro) {
@@ -422,7 +391,6 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 
 			headers: {
 			   
-				//    Authorization: localStorage.getItem("token") === null ? '': "Bearer " + localStorage.getItem("token"),
 					   Accept:"*/*",
 					   "Content-Type":"application/json",
 					   Authorization: "Bearer "+ $scope.token,
@@ -491,7 +459,6 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 			url: APP_DEFAULT_URL.url + "enlace/committee/member",
 			data: $scope.borrar,
 			headers: {
-			  //    Authorization: localStorage.getItem("token") === null ? '': "Bearer " + localStorage.getItem("token"),
 			  Accept:"*/*",
 			  "Content-Type":"application/json",
 			  Authorization: "Bearer "+ $scope.token,

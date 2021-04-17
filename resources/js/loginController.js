@@ -1,37 +1,74 @@
 app.controller('loginController', function ($scope, $http, APP_DEFAULT_URL, $window) {
 
-	$scope.desconversion = function(token){
-			var token2 = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQWRtaW5pc3RyYWRvciIsInVzZXJuYW1lIjoic2ljb3ZlQGxvY2FsaG9zdC5jb20iLCJzdWIiOiJzaWNvdmVAbG9jYWxob3N0LmNvbSIsImlhdCI6MTYxODI5MTc0MiwiZXhwIjoxNjE4MzA5NzQyfQ.2cHCyp0FDRD0-BVPrjk6ejIA8GSxDc5L-r9gtUU8PyE";
-			var base64Url = token2.split(".")[1];
-			var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-			var jsonPayload = decodeURIComponent(
-			  atob(base64)
+	$scope.desconversion = function (token) {
+
+		var base64Url = token.split(".")[1];
+		var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+		var jsonPayload = decodeURIComponent(
+			atob(base64)
 				.split("")
-				.map(function(c) {
-				  return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+				.map(function (c) {
+					return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
 				})
 				.join("")
-			);
-			return JSON.parse(jsonPayload);
-	
+		);
+		return JSON.parse(jsonPayload);
+
 	}
 
-    $scope.inicioSesion = function () {
-		
+	$scope.inicioSesion = function () {
+
 		$http.post(APP_DEFAULT_URL.url + "login", $scope.credencials, {
-			headers: {
-               
-         //    Authorization: localStorage.getItem("token") === null ? '': "Bearer " + localStorage.getItem("token"),
-	
-                "Content-Type":"application/json",
-				"Access-Control-Allow-Methods": "*",
-				"Access-Control-Allow-Headers": "Content-Type",
-				"Access-Control-Allow-Headers": "Authorization",
-				"Access-Control-Expose-Headers": "Authorization",
-				
+
+		}).then(function (response) {
+
+			if (response.status == 200) {
+				Swal.fire(
+					'Exito',
+					'Inició correctamentes',
+					'success'
+				);
+				var responseHeader = response.headers(["authorization"]);
+				var tokendata = responseHeader.slice(7);
+				$window.localStorage.setItem('token', JSON.stringify(tokendata));
+				$scope.rolToken = $scope.desconversion(tokendata);
+				console.log($scope.rolToken);
+				if ($scope.rolToken.role == "Administrador") {
+					console.log("administrador")
+					$window.location.href = "#/administrar/admin"; 	
+				}
+
+				if ($scope.rolToken.role == "Enlace") {
+					console.log("enlace")
+					$window.location.href = "#/enlace/comite"; 	
+				}
+
+				if ($scope.rolToken.role == "Comité") {
+					console.log("Miembro comite")
+					$window.location.href = "#/comite/peticion"; 
+				}
+
+			} else {
+				Swal.fire(
+					'Advertencia',
+					'Usuario y/o contraseña incorrecto',
+					'warning'
+				);
+				$scope.credencials = {}
+
+
 			}
-		}).success(function(data,status,headers,response){
-			console.log('token' + response.headers('Autori'));
+
+
+		}, function errorCallback(response) {
+			Swal.fire(
+				'Advertencia',
+				'Algo salío mal, intentelo nuevamente ',
+				'warning'
+			);
+			console.log("No inicio sesion");
+			console.log(response);
 		})
 	};
+
 });

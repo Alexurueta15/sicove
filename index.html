@@ -34,11 +34,6 @@ color-on-scroll="10">
 	</div>
 	<div class="collapse navbar-collapse text-center">
 		<ul class="navbar-nav ml-auto">
-			<li class="nav-item">
-				<a ng-href="#/" class="btn btn-rose btn-raised btn-round">
-					<i class="material-icons">home</i> Inicio
-				</a>
-			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,35 +45,49 @@ color-on-scroll="10">
 					<a class="dropdown-item" ng-href="#/administrar/admin"> <i
 							class="material-icons">engineering</i>
 						Administradores</a>
+						<div class="dropdown-divider"></div>
 					<a class="dropdown-item" ng-href="#/admnistrar/enlace"> <i
 							class="material-icons">supervised_user_circle</i>
 						Enlaces</a>
-					<div class="dropdown-divider"></div>
+						<div class="dropdown-divider"></div>
+			
 					<a class="dropdown-item" ng-href="#/admnistrar/bitacora"> <i class="material-icons">ballot</i>
 						Bitácoras</a>
 				</div>
 			</li>
-			<!--<li class="nav-item">
-				<a href="#pablo" class="btn btn-rose btn-raised btn-round" data-toggle="dropdown">
-					<i class="material-icons">email</i> 7
-				</a>
-			</li>-->
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="material-icons">menu</i>
-					Menú
+					Enlacé
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<a class="dropdown-item" ng-href="#/enlace/solicitudes"><i
+							class="material-icons">mark_as_unread</i>Peticiones</a>
+							<div class="dropdown-divider"></div>
+					<a class="dropdown-item" ng-href="#/enlace/comite"><i class="material-icons">people</i>Comités
+						Vecinales</a>
+			
+				</div>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="material-icons">menu</i>
+					COMITÉ
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" ng-href="#/comite/peticion"><i
 							class="material-icons">mark_as_unread</i>Peticiones</a>
-					<a class="dropdown-item" ng-href="#/enlace/comite"><i class="material-icons">people</i>Comités
-						Vecinales</a>
 			
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" ng-href="#/"><i class="material-icons">logout</i>Cerrar
-						sesión</a>
+				
+			
 				</div>
+			</li>
+			<li class="nav-item">
+				<a ng-click="cerrarSesion()" class="btn btn-rose btn-raised btn-round">
+					<i class="material-icons">logout</i>Cerrar
+					sesión</a>
 			</li>
 		</ul>
 	</div>
