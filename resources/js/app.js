@@ -12,7 +12,65 @@ app.controller('mainCtrl',['$scope','$http','$window', function ($scope,$http,$w
 	  $scope.cerrarSesion = function(){
 		  
 		localStorage.removeItem('token');
-		$window.location.href = "#/"; 	
+		
+		$window.location.href = "#/"; 
+		$window.setTimeout(() => {
+			
+		}, 3000);	
+		$window.location.reload();
+		
+	}
+
+
+	$scope.MostrarIniciarSesionBotones = function(){
+
+		
+
+
+		$scope.token=JSON.parse($window.localStorage.getItem("token"));
+
+		if($scope.token!=null){
+		$scope.sesion = $scope.desconversion($scope.token);
+		console.log($scope.sesion);
+		if ($scope.sesion.role == "Administrador") {
+			$scope.administrador=true;
+			$scope.cerrarSesionBot=true;
+		}
+
+		if ($scope.sesion.role == "Enlace") {
+			$scope.enlace =true;
+			$scope.cerrarSesionBot=true;
+		}
+
+		if ($scope.sesion.role == "Comité") {
+			$scope.comite=true;
+		$scope.cerrarSesionBot=true;
+			
+		}
+
+		}else{
+			$scope.administrador=false;
+			$scope.enlace =false;
+			$scope.comite=false;
+			$scope.cerrarSesionBot=false;
+		}
+
+	}
+
+	$scope.desconversion = function (token) {
+
+		var base64Url = token.split(".")[1];
+		var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+		var jsonPayload = decodeURIComponent(
+			atob(base64)
+				.split("")
+				.map(function (c) {
+					return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+				})
+				.join("")
+		);
+		return JSON.parse(jsonPayload);
+
 	}
 
 	  

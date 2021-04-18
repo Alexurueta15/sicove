@@ -19,7 +19,7 @@
 <!--Aquí va el codigo del menú-->
 <nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg bg-primary"
 color-on-scroll="10">
-<div class="container">
+<div class="container" ng-init="MostrarIniciarSesionBotones()">
 	<div class="navbar-translate">
 			<img src="./material-kit-master/assets/img/LogoComiteVecinal-02.png" class="img-fluid"
 				style="max-width: 60px;">
@@ -34,7 +34,7 @@ color-on-scroll="10">
 	</div>
 	<div class="collapse navbar-collapse text-center">
 		<ul class="navbar-nav ml-auto">
-			<li class="nav-item dropdown">
+			<li class="nav-item dropdown" ng-show="administrador">
 				<a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="material-icons">manage_accounts</i>
@@ -55,7 +55,7 @@ color-on-scroll="10">
 						Bitácoras</a>
 				</div>
 			</li>
-			<li class="nav-item dropdown">
+			<li class="nav-item dropdown" ng-show="enlace"> 
 				<a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="material-icons">menu</i>
@@ -70,7 +70,7 @@ color-on-scroll="10">
 			
 				</div>
 			</li>
-			<li class="nav-item dropdown">
+			<li class="nav-item dropdown" ng-show="comite">
 				<a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="material-icons">menu</i>
@@ -84,7 +84,7 @@ color-on-scroll="10">
 			
 				</div>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item" ng-show="cerrarSesionBot">
 				<a ng-click="cerrarSesion()" class="btn btn-rose btn-raised btn-round">
 					<i class="material-icons">logout</i>Cerrar
 					sesión</a>

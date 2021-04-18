@@ -218,20 +218,142 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 
 	};
 
+	$scope.getData = function () {
+
+		$scope.MiembroData.members[0].residence.street=null;
+		$scope.MiembroData.members[0].residence.municipality="";
+		$scope.MiembroData.members[0].residence.locality="";
+		console.log($scope.MiembroData.members[0].residence.zipCode);
+		
+		$http.get("https://api-sepomex.hckdrk.mx/query/info_cp/"+$scope.MiembroData.members[0].residence.zipCode+"?token=55d025b2-48cd-46db-8748-6955ac7a580d",{
+		}).then(function (response) {
+            console.log(response.data)
+			$scope.domicilioData = response.data;
+			$scope.colonias = response.data;
+			  console.log("--------")
+			 // console.log($scope.cps);
+		});
+
+
+		};
+
+		$scope.getData2 = function () {
+
+			$scope.editarMiembro.residence.street=null;
+			$scope.editarMiembro.residence.municipality="";
+			$scope.editarMiembro.residence.locality="";
+			console.log($scope.editarMiembro.residence.zipCode);
+
+			$http.get("https://api-sepomex.hckdrk.mx/query/info_cp/"+$scope.editarMiembro.residence.zipCode+"?token=55d025b2-48cd-46db-8748-6955ac7a580d",{
+		}).then(function (response) {
+            console.log(response.data)
+			$scope.domicilioData = response.data;
+			$scope.colonias = response.data;
+			  console.log("--------")
+			 // console.log($scope.cps);
+		});
+			};
+
+	$scope.getPosiciones = function () {
+		/*--------*/ 
+		var header={
+			   
+			Accept:"*/*",
+			"Content-Type":"application/json",
+			Authorization: "Bearer "+ $scope.token,
+			"Access-Control-Allow-Origin":  "http://localhost:8080",
+			"Access-Control-Allow-Methods": "*",
+			"Access-Control-Allow-Headers": "Content-Type",
+			"Access-Control-Allow-Headers": "Authorization"
+		}
+
+		$http.get(APP_DEFAULT_URL.url + "enlace/committee/positions",{
+			headers: header
+		}).then(function (response) {
+			
+            console.log(response.data)
+			$scope.posiciones = response.data;
+			$scope.posiciones.splice(0,1);
+			var miembros = $scope.miembrosComite;
+			var posiciones = $scope.posiciones;
+			console.log(posiciones);
+			miembros.forEach(element => {
+				
+				console.log(element.position.position);
+				if(posiciones[0].position == element.position.position && posiciones[0].position== "Presidente" ){
+					console.log("La posicion es: "+ element.position.position);
+					$scope.posiciones.splice(0,1);
+				}
+				if(posiciones[1].position == element.position.position && posiciones[1].position== "Vicepresidente" ){
+					console.log("La posicion es: "+ element.position.position);
+					$scope.posiciones.splice(1,1);
+				}
+				if(posiciones[0].position == element.position.position && posiciones[0].position== "Vicepresidente" ){
+					console.log("La posicion es: "+ element.position.position);
+					$scope.posiciones.splice(0,1);
+				}
+			});
+
+			console.log($scope.posiciones);
+		
+			
+		
+			
+		});
+
+	
+
+	}
+
+	
+
+	$scope.getPosicionesEditar = function () {
+
+			var miembros = $scope.editarMiembro;
+			var posiciones = $scope.posiciones;
+			console.log(posiciones);
+			posiciones.forEach( function(element, indice, array) {
+				
+				console.log(element.position);
+				console.log(miembros.position.position);
+				if(element.position !== miembros.position.position){
+					console.log("Entro a la posicion que debe ")
+					$scope.posiciones.push(miembros.position);
+				}
+			
+
+			});
+
+			console.log($scope.posiciones);
+		
+			
+		
+	
+
+	
+
+	}
+
+	$scope.mostrarUserPassword = function(){
+
+		if($scope.editarMiembro.position.position == "Vicepresidente"){
+			$scope.mostrarSeccionUser=true;
+		}
+		else if ($scope.editarMiembro.position.position == "Presidente") {
+			$scope.mostrarSeccionUser=true;
+		}else{
+			$scope.mostrarSeccionUser=false;
+		}
+
+	}
+
 	$scope.getMiembros = function () {
 
 		$scope.datosComiteLocal = JSON.parse($window.localStorage.getItem("comite"));
-		console.log($scope.datosComiteLocal);
-
 		$scope.comiteConsultado = {
 			"id": $scope.datosComiteLocal.id
 		}
-
-		console.log($scope.comiteConsultado);
-	
-
 		/*--------*/ 
-
 		var header={
 			   
 			Accept:"*/*",
@@ -248,25 +370,47 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 			
 			console.log("miembros");
 			console.log(response);
+			$scope.miembrosComite=response.data.members;
+			$scope.getPosiciones();
+		
 		});
 
-		/*--------*/ 
 
-		$http.get(APP_DEFAULT_URL.url + "enlace/committee/positions",{
-			headers: header
+		$http.get("https://api-sepomex.hckdrk.mx/query/get_cp_por_estado/Morelos?token=55d025b2-48cd-46db-8748-6955ac7a580d",{
 		}).then(function (response) {
-			console.log("esto es una prueba _--------------")
-            console.log(response.data)
-			$scope.posiciones = response.data;
-
+            console.log(response.data.response)
+			$scope.codigoPostal = response.data.response;
+			
+			$scope.cps =[];
+			angular.forEach($scope.codigoPostal.cp, function(value, key){
+			
+				var tecnologia = {
+					id : key,
+					cp : value
+				}
+				$scope.cps.push(tecnologia);
+			  });
+			  console.log("--------")
+			  console.log($scope.cps);
 		});
+		
+
 	};
 
 
 	//Miembros
 
-	$scope.registrarNuevoMiembro = function (MiembroData) {
+	$scope.registrarNuevoMiembro = function () {
 		var datosComite = JSON.parse($window.localStorage.getItem("comite"));
+		var posiciones = $scope.posiciones;
+		posiciones.forEach(element => {
+				
+			console.log(element.position.position);
+			if(element.position==$scope.MiembroData.members[0].position.position){
+				$scope.MiembroData.members[0].position.id= element.id
+			}
+		});
+		console.log($scope.MiembroData);
 
 		$scope.data = {
 			"id":datosComite.id,
@@ -283,8 +427,8 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 						"zipCode":  $scope.MiembroData.members[0].residence.zipCode
 					},
 					"position": {
-						"id":"606ff8b14c111767bfa40150",
-						"position": "Miembro"
+						"id": $scope.MiembroData.members[0].position.id,
+						"position":  $scope.MiembroData.members[0].position.position
 					},
 					"user": {
 						"username":  $scope.MiembroData.members[0].user.username,
@@ -317,7 +461,9 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 					'Registro correcto',
 					'success'
 					);
+					$scope.getMiembros();
 					$scope.data={};
+					$scope.MiembroData={};
 					//$scope.getCommittees();
 					$("#CerrarCrear").click();
 					
@@ -353,38 +499,95 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 		
 		)
 	};
-   
-	$scope.posicionId = function(){
-
-		var posiciones = $scope.posiciones;
-		console.log($scope.MiembroData);
-		posiciones.forEach(element => {
-			if($scope.MiembroData.members[0].position.position == element.position){
-				$scope.MiembroData.members[0].position.id=element.id; 
-			}
-		});
-		console.log("llenado es ---- ");
-		console.log($scope.MiembroData);
-	}
-
 
 
 	$scope.EditarMiembro = function (miembro) {
 
 		$scope.editarMiembro= angular.copy(miembro);
+		var codigoPostalEditar=$scope.editarMiembro.residence.zipCode;
+		console.log(codigoPostalEditar);
+		$http.get("https://api-sepomex.hckdrk.mx/query/info_cp/"+codigoPostalEditar+"?token=55d025b2-48cd-46db-8748-6955ac7a580d",{
+		}).then(function (response) {
+			console.log(response.data)
+			$scope.domicilioData = response.data;
+			$scope.colonias = response.data;
+			  console.log("--------")
+			 // console.log($scope.cps);
+		});
+		$scope.getPosicionesEditar();	
 		$("#editarModal").modal('show');
-
+		$scope.mostrarUserPassword();
 	};
 
 
 	$scope.editarMiembroData = function () {
-		
+		var datosComite = JSON.parse($window.localStorage.getItem("comite"));
+		var posiciones = $scope.posiciones;
+		console.log(posiciones);
+		var posicionMiembro =$scope.editarMiembro.position.position;
+		posiciones.forEach(element => {
+			
+			console.log(element.position);
+			if(element.position == posicionMiembro){
+				$scope.editarMiembro.position.id= element.id
+			}
+		});
+		if($scope.editarMiembro.position.position == "Miembro"){
 		$scope.editarDatosMiembro={
-			id: $scope.editarMiembro.id,
-            alias: $scope.editarMiembro.alias,
-            municipality: $scope.editarMiembro.municipality
+			"id":datosComite.id,
+			"members": [
+				{
+					"id":$scope.editarMiembro.id,
+					"name": $scope.editarMiembro.name,
+					"lastname": $scope.editarMiembro.lastname,
+					"phoneNumber": $scope.editarMiembro.phoneNumber,
+					"email": $scope.editarMiembro.email,
+					"residence": {
+						"municipality": $scope.editarMiembro.residence.municipality,
+						"locality":  $scope.editarMiembro.residence.locality,
+						"street":  $scope.editarMiembro.residence.street,
+						"zipCode":  $scope.editarMiembro.residence.zipCode
+					},
+					"position": {
+						"id": $scope.editarMiembro.position.id,
+						"position":  $scope.editarMiembro.position.position
+					},
+					"user": {
+						"username":"default@gmail.com",
+						"password":"Uno234"
+					}
+				}
+			]	
 	   }
 	
+	}else{
+		$scope.editarDatosMiembro={
+			"id":datosComite.id,
+			"members": [
+				{
+					"id":$scope.editarMiembro.id,
+					"name": $scope.editarMiembro.name,
+					"lastname": $scope.editarMiembro.lastname,
+					"phoneNumber": $scope.editarMiembro.phoneNumber,
+					"email": $scope.editarMiembro.email,
+					"residence": {
+						"municipality": $scope.editarMiembro.residence.municipality,
+						"locality":  $scope.editarMiembro.residence.locality,
+						"street":  $scope.editarMiembro.residence.street,
+						"zipCode":  $scope.editarMiembro.residence.zipCode
+					},
+					"position": {
+						"id": $scope.editarMiembro.position.id,
+						"position":  $scope.editarMiembro.position.position
+					},
+					"user": {
+						"username":  $scope.editarMiembro.user.username,
+						"password": $scope.editarMiembro.user.password
+					}
+				}
+			]	
+	   }
+	}
 
 		console.log($scope.editarDatosMiembro);
 		$http.put(APP_DEFAULT_URL.url + "enlace/committee/member",$scope.editarDatosMiembro, {
@@ -402,13 +605,14 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 				   }
 		}).then(function (response) {
 
+			console.log(response);
 			if (response.data.statusCode == 200) {
 				Swal.fire(
 					'Exito',
 					'Actualizacion correcta',
 					'success'
 					);
-				//$scope.getCommittees();
+				$scope.getMiembros();
 				$("#CerrarEditar").click();
 			
 
@@ -450,9 +654,17 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 	};
 
 	$scope.deleteMiembro = function () {
+		var datosComite = JSON.parse($window.localStorage.getItem("comite"));
 		$scope.borrar= {
-			"id":$scope.borrarMiembro
-		};
+			"id":datosComite.id,
+			"members": [
+				{
+					  "id": $scope.borrarMiembro 
+				}
+			]
+		}
+
+		console.log($scope.borrar);
 
 		$http({
 			method: 'DELETE',
@@ -477,7 +689,7 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 					'Eliminación correcta',
 					'success'
 					);
-                  //  $scope.getCommittees();
+					$scope.getMiembros();
                     $("#CerrarEliminar").click();
 
 			} else {

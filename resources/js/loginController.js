@@ -36,16 +36,28 @@ app.controller('loginController', function ($scope, $http, APP_DEFAULT_URL, $win
 				if ($scope.rolToken.role == "Administrador") {
 					console.log("administrador")
 					$window.location.href = "#/administrar/admin"; 	
+					$window.setTimeout(() => {
+			
+					}, 3000);	
+					$window.location.reload();
 				}
 
 				if ($scope.rolToken.role == "Enlace") {
 					console.log("enlace")
-					$window.location.href = "#/enlace/comite"; 	
+					$window.location.href = "#/enlace/comite"; 
+					$window.setTimeout(() => {
+			
+					}, 3000);	
+					$window.location.reload();	
 				}
 
 				if ($scope.rolToken.role == "Comité") {
 					console.log("Miembro comite")
 					$window.location.href = "#/comite/peticion"; 
+					$window.setTimeout(() => {
+			
+					}, 3000);	
+					$window.location.reload();
 				}
 
 			} else {

@@ -31,8 +31,6 @@
                      <tr>
                          <th scope="col">Alias</th>
                          <th scope="col">Municipio</th>
-                         <th scope="col">Presidente</th>
-                         <th scope="col">Vicepresidente</th>
                          <th scope="col">Miembros</th>
                          <th scope="col" class="text-center">Acciones</th>
 
@@ -42,8 +40,6 @@
                      <tr ng-repeat="comite in comites">
                          <th>{{comite.alias}}</th>
                          <td>{{comite.municipality}}</td>
-                         <td><div ng-if="comite.members.position.position =='president'">{{comite.members.name}}</div></td>
-                         <td><div ng-if="comite.members.position.position =='vicepresident'">{{comite.members.name}}</div></td> 
                          <td> 
                              <ul ng-repeat="miembro in comite.members">
                                 <li><div>{{miembro.name}} {{miembro.lastname}}</div></li>

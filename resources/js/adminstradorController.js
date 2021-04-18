@@ -248,6 +248,8 @@ app.controller('administradorController', function ($scope, $http, APP_DEFAULT_U
 
 
 		};
+
+		
 		$scope.getData2 = function () {
 	
 	

@@ -1,4 +1,3 @@
-
 <style>
     .alert {
         visibility: hidden;
@@ -11,104 +10,103 @@
     }
 </style>
 
- <!-- BODY -->
+<!-- BODY -->
 
 
- <div class="page-header header-filter" data-parallax="true"
- style="background-image: url('./material-kit-master/assets/img/bgMorelos2.jpg')">
- <div class="container">
-     <div class="row">
-         <div class="col-md-8 ml-auto mr-auto">
-             <div class="brand text-center">
-                 <h1>Comité Vecinal</h1>
-                 <h3 class="title text-center">Prototipo</h3>
-             </div>
-         </div>
-     </div>
- </div>
+<div class="page-header header-filter" data-parallax="true"
+    style="background-image: url('./material-kit-master/assets/img/bgMorelos2.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 ml-auto mr-auto">
+                <div class="brand text-center">
+                    <h1>Comité Vecinal</h1>
+                    <h3 class="title text-center">Prototipo</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="main main-raised" >
- <div class="alert alert-success" id="exitoToast">
-     <div class="container">
-         <div class="alert-icon">
-             <i class="material-icons">check_circle_outline</i>
-         </div>
-         <button type="button" class="close" onclick="closeToast()" aria-label="Close">
-             <span aria-hidden="true"><i class="material-icons">clear</i></span>
-         </button>
-         <b>Éxito:</b> Tu solicitud ha sido registrada con exitosamente ! ^u^
-     </div>
- </div>
+<div class="main main-raised">
+    <div class="alert alert-success" id="exitoToast">
+        <div class="container">
+            <div class="alert-icon">
+                <i class="material-icons">check_circle_outline</i>
+            </div>
+            <button type="button" class="close" onclick="closeToast()" aria-label="Close">
+                <span aria-hidden="true"><i class="material-icons">clear</i></span>
+            </button>
+            <b>Éxito:</b> Tu solicitud ha sido registrada con exitosamente ! ^u^
+        </div>
+    </div>
 
- <div class="alert alert-danger" id="falloToast">
-     <div class="container">
-         <div class="alert-icon">
-             <i class="material-icons">highlight_off</i>
-         </div>
-         <button type="button" class="close" onclick="closeToast()" aria-label="Close">
-             <span aria-hidden="true"><i class="material-icons">clear</i></span>
-         </button>
-         <b>PELIGRO:</b> Todo lo que ha podido fallar en el sistema, lo ha hecho ! :c
-     </div>
- </div>
+    <div class="alert alert-danger" id="falloToast">
+        <div class="container">
+            <div class="alert-icon">
+                <i class="material-icons">highlight_off</i>
+            </div>
+            <button type="button" class="close" onclick="closeToast()" aria-label="Close">
+                <span aria-hidden="true"><i class="material-icons">clear</i></span>
+            </button>
+            <b>PELIGRO:</b> Todo lo que ha podido fallar en el sistema, lo ha hecho ! :c
+        </div>
+    </div>
 
- <div class="container">
+    <div class="container">
 
-     <h2 style="padding-top: 20px;" class="title text-primary text-center">Miembros</h2>
-     <button class="btn btn-rose btn-round btn-md" data-toggle="modal" data-target="#crearModal"> <i
-             class="material-icons">add_circle_outline</i> Registrar nuevo miembro
-     </button>
+        <h2 style="padding-top: 20px;" class="title text-primary text-center">Miembros</h2>
+        <button class="btn btn-rose btn-round btn-md" data-toggle="modal" data-target="#crearModal"> <i
+                class="material-icons">add_circle_outline</i> Registrar nuevo miembro
+        </button>
 
-     <div class="row">
-         <div class="col-md-12" ng-init="getMiembros()">
-             <table class="table table-responsive-md table-hover">
-                 <thead class="table-primary">
-                     <tr>
-                         <th scope="col">Nombre(s)</th>
-                         <th scope="col">Apellido(s)</th>
-                         <th scope="col">Correo</th>
-                         <th scope="col">Telefono</th>
-                         <th scope="col">Estado</th>
-                         <th scope="col">Municipio</th>
-                         <th scope="col">Colonia</th>
-                         <th scope="col" class="text-center">Acciones</th>
+        <div class="row">
+            <div class="col-md-12" ng-init="getMiembros()">
+                <table class="table table-responsive-md table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col">Nombre(s)</th>
+                            <th scope="col">Apellido(s)</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Municipio</th>
+                            <th scope="col">Colonia</th>
+                            <th scope="col" class="text-center">Acciones</th>
 
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr ng-repeat="miembro in miembrosFiltrados">
-                        <td>{{miembro.name}}</td>
-                        <td>{{miembro.lastname}}</td>
-                        <td>{{miembro.email}}</td>
-                        <td>{{miembro.phoneNumber}}</td>
-                        <td>{{miembro.residence.municipality}}</td>
-                        <td>{{miembro.residence.locality}}</td>
-                         <td>
-                             <div class="row">
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-warning btn-round btn-sm"
-                                        data-toggle="modal" ng-click="EditarMiembro(miembro)"> <i
-                                            class="material-icons">edit</i> Editar
-                                    </button>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="miembro in miembrosComite">
+                            <td>{{miembro.name}}</td>
+                            <td>{{miembro.lastname}}</td>
+                            <td>{{miembro.email}}</td>
+                            <td>{{miembro.phoneNumber}}</td>
+                            <td>{{miembro.residence.municipality}}</td>
+                            <td>{{miembro.residence.locality}}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-warning btn-round btn-sm"
+                                            data-toggle="modal" ng-click="EditarMiembro(miembro)"> <i
+                                                class="material-icons">edit</i> Editar
+                                        </button>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-danger btn-round btn-sm"
+                                            data-toggle="modal" ng-click="BorrarMiembro(miembro.id)"> <i
+                                                class="material-icons">delete_forever</i> Eliminar </button>
+                                    </div>
                                 </div>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-danger btn-round btn-sm"
-                                        data-toggle="modal" ng-click="BorrarMiembro(miembro.id)"> <i
-                                            class="material-icons">delete_forever</i> Eliminar </button>
-                                </div>
-                             </div>
-                         </td>
-                     </tr>
-                 </tbody>
-             </table>
-         
-         </div>
-     </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-     <div class="info"></div>
- </div>
+            </div>
+        </div>
+
+        <div class="info"></div>
+    </div>
 </div>
 
 <!-- FIN BODY -->
@@ -116,113 +114,140 @@
 <!-- CREAR MODAL -->
 
 <div style="margin-top: 80px;" class="modal fade" id="crearModal" tabindex="-1" role="dialog"
- aria-labelledby="exampleModalLabel" aria-hidden="true">
- <div class="modal-dialog modal-lg" role="document">
-     <div class="modal-content">
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
 
-         <div class="modal-header">
-             <h2 class="modal-title text-primary title" id="exampleModalLabel">Registrar nuevo miembro</h2>
-             <button type="button" class="close" id="CerrarCrear"  data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-             </button>
-         </div>
-
-         <form  ng-submit="registrarNuevoMiembro(MiembroData)" >
-
-            <div class="modal-body">
-                <h3 class="subtitle text-primary">Datos personales</h3>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputEmail4">Nombre(s)</label>
-                        <input type="text" onkeypress="return soloLetras(event)" required class="form-control" id="name" placeholder="Jimena" maxlength="15" minlength="3" ng-model="MiembroData.members[0].name" >
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputPassword4">Apellido(s) </label>
-                        <input type="text" required onkeypress=" return soloLetras(event)" class="form-control" id="apellidos" placeholder="Hernadez Martinez" maxlength="20" minlength="4"  ng-model="MiembroData.members[0].lastname" >
-                    </div>
-                   
-                </div>
-
-                <h3 class="subtitle text-primary">Datos de Contacto</h3>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">Correo electronico</label>
-                        <input type="email" required class="form-control" id="correo" placeholder="sicove@gmail.com" ng-model="MiembroData.members[0].email">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">Teléfono</label>
-                        <input type="tel" required class="form-control" onkeypress="return soloNumeros(event)" id="telefono" placeholder="7775975961" maxlength="10" minlength="10" ng-model="MiembroData.members[0].phoneNumber">
-                    </div>
-                </div>
-
-                <h3 class="subtitle text-primary">Domicilio</h3>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="Municipio">
-                            Delegación / Municipio</label>
-                            <input type="text" required onkeypress="return soloLetras(event)" maxlength="20" minlength="5"  class="form-control" id="municipio" placeholder="Jiutepec" ng-model="MiembroData.members[0].residence.municipality">
-
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="Colonia">
-                            Colonia / Asentamiento</label>
-                            <input type="text" required class="form-control"  onkeypress="return soloLetras(event)" maxlength="20" minlength="5"  id="colonia" placeholder="Constitucion" ng-model="MiembroData.members[0].residence.locality">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-8">
-                        <label for="inputAddress" required>Calle</label>
-                        <input type="text" class="form-control" id="calle"  onkeypress="return alfanumerico(event)" placeholder="Lomas verdes" required maxlength="20" minlength="4"  ng-model="MiembroData.members[0].residence.street">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputCity">Codigo postal</label>
-                        <input type="number" required class="form-control" id="codigopostal" maxlength="5" minlength="6" onkeypress="return soloNumeros(event)"  ng-model="MiembroData.members[0].residence.zipCode">
-                    </div>
-                </div>
-                <h3 class="subtitle text-primary">Posicion</h3>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="Municipio">
-                            id</label>
-                            <input type="text" required onkeypress="return soloLetras(event)" maxlength="20" minlength="5"  class="form-control" id="municipio" placeholder="Jiutepec" ng-model="MiembroData.members[0].position.id">
-
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="Colonia">
-                            Posicion</label>
-                            <input type="text" required class="form-control"  onkeypress="return soloLetras(event)" maxlength="20" minlength="5"  id="colonia" placeholder="Constitucion" ng-model="MiembroData.members[0].position.position">
-                    </div>
-                </div>
-                <h3 class="subtitle text-primary">Datos de inicio de sesión</h3>
-                <div class="form-row">
-                   <div class="form-group col-md-6">
-                       <label for="inputEmail4">Correo</label>
-                       <input type="email" required class="form-control" id="correoPersonal" placeholder="monica@gmail.com"  ng-model="MiembroData.members[0].user.username">
-                   </div>
-                   <div class="form-group col-md-4">
-                       <label for="inputPassword4">Contraseña </label>
-                       <input type="password" required class="form-control" id="passwordPersonal" placeholder="2DS1V43e" minlength="4"  ng-model="MiembroData.members[0].user.password"> 
-                   </div>
-               </div>
-               <div class="form-row"  ng-repeat="error in errores" ng-if="errores">  
-                   <span  class="col-12 invalid-tooltip4"  >
-                       <i
-                        class="material-icons">error</i>   {{error}}    
-                    </span>
-                    
-               </div>
-               {{MiembroData}}
+            <div class="modal-header">
+                <h2 class="modal-title text-primary title" id="exampleModalLabel">Registrar nuevo miembro</h2>
+                <button type="button" class="close" id="CerrarCrear" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
 
-             <div class="modal-footer">
-                 <button id="falloBtn" type="button" class="btn btn-primary btn-link"
-                     data-dismiss="modal">Cancelar</button>
-                 <button id="exitoBtn" type="submit" class="btn btn-primary btn-round"><i
-                         class="material-icons">check</i>Registrar miembro</button>
-             </div>
-         </form>
-     </div>
- </div>
+            <form ng-submit="registrarNuevoMiembro(MiembroData)">
+
+                <div class="modal-body">
+                    <h3 class="subtitle text-primary">Datos personales</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputEmail4">Nombre(s)</label>
+                            <input type="text" onkeypress="return soloLetras(event)" required class="form-control"
+                                id="name" placeholder="Jimena" maxlength="15" minlength="3"
+                                ng-model="MiembroData.members[0].name">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword4">Apellido(s) </label>
+                            <input type="text" required onkeypress=" return soloLetras(event)" class="form-control"
+                                id="apellidos" placeholder="Hernadez Martinez" maxlength="20" minlength="4"
+                                ng-model="MiembroData.members[0].lastname">
+                        </div>
+
+                    </div>
+
+                    <h3 class="subtitle text-primary">Datos de Contacto</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Correo electronico</label>
+                            <input type="email" required class="form-control" id="correo" placeholder="sicove@gmail.com"
+                                ng-model="MiembroData.members[0].email">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Teléfono</label>
+                            <input type="tel" required class="form-control" onkeypress="return soloNumeros(event)"
+                                id="telefono" placeholder="7775975961" maxlength="10" minlength="10"
+                                ng-model="MiembroData.members[0].phoneNumber">
+                        </div>
+                    </div>
+
+                    <h3 class="subtitle text-primary">Domicilio</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+
+                            <label for="CodigoPostal">
+                                Código Postal</label>
+                            <select id="CodigoPostal" class="form-control" ng-model="MiembroData.members[0].residence.zipCode"
+                                ng-change="getData()" required>
+                                <option value="" selected>Elije una opcion</option>
+                                <option ng-repeat="codigo in cps" value="{{codigo.cp}}">{{codigo.cp}}</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="Municipio">
+                                Delegación / Municipio</label>
+                            <select id="Municipio" class="form-control" ng-model="MiembroData.members[0].residence.municipality"
+                                required>
+                                <option value="" selected>Elije una opcion</option>
+                                <option ng-repeat="municipioo in domicilioData | limitTo : 1"
+                                    value="{{municipioo.response.municipio}}">{{municipioo.response.municipio}}</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="Colonia">
+                                Colonia / Asentamiento</label>
+                            <select id="Colonia" class="form-control" ng-model="MiembroData.members[0].residence.locality" required>
+                                <option value="" selected>Elije una opcion</option>
+                                <option ng-repeat="colonia in colonias" value="{{colonia.response.asentamiento}}">
+                                    {{colonia.response.asentamiento}}</option>
+
+                            </select>
+
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="inputAddress" required>Calle</label>
+                            <input type="text" class="form-control" id="calle" onkeypress="return alfanumerico(event)"
+                                placeholder="Lomas verdes" required maxlength="20" minlength="4"
+                                ng-model="MiembroData.members[0].residence.street" >
+                        </div>
+                    </div>
+                    <h3 class="subtitle text-primary">Posición</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="Posicion">Posición</label>
+                            <select id="Posicion" class="form-control"  ng-model="MiembroData.members[0].position.position" required>
+                                <option value="" selected>Elije una opcion</option>
+                                <option ng-repeat="posicion in posiciones" value="{{posicion.position}}">
+                                    {{posicion.position}}</option>
+
+                            </select>
+                        </div>
+
+                    </div>
+                    <h3 class="subtitle text-primary">Datos de inicio de sesión</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Correo</label>
+                            <input type="email" required class="form-control" id="correoPersonal"
+                                placeholder="monica@gmail.com" ng-model="MiembroData.members[0].user.username">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword4">Contraseña </label>
+                            <input type="password" required class="form-control" id="passwordPersonal"
+                                placeholder="2DS1V43e" minlength="4" ng-model="MiembroData.members[0].user.password">
+                        </div>
+                    </div>
+                    <div class="form-row" ng-repeat="error in errores" ng-if="errores">
+                        <span class="col-12 invalid-tooltip4">
+                            <i class="material-icons">error</i> {{error}}
+                        </span>
+
+                    </div>
+                
+                </div>
+
+                <div class="modal-footer">
+                    <button id="falloBtn" type="button" class="btn btn-primary btn-link"
+                        data-dismiss="modal">Cancelar</button>
+                    <button id="exitoBtn" type="submit" class="btn btn-primary btn-round"><i
+                            class="material-icons">check</i>Registrar miembro</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!-- FIN CREAR MODAL -->
@@ -230,87 +255,138 @@
 <!-- EDITAR MODAL -->
 
 <div style="margin-top: 80px;" class="modal fade" id="editarModal" tabindex="-1" role="dialog"
- aria-labelledby="exampleModalLabel" aria-hidden="true">
- <div class="modal-dialog modal-lg" role="document">
-     <div class="modal-content">
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
 
-         <div class="modal-header">
-             <h2 class="modal-title text-primary title" id="exampleModalLabel">Editar miembro</h2>
-             <button type="button" class="close"  id="CerrarEditar" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-             </button>
-         </div>
+            <div class="modal-header">
+                <h2 class="modal-title text-primary title" id="exampleModalLabel">Editar miembro</h2>
+                <button type="button" class="close" id="CerrarEditar" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-        
-         <form ng-submit="editarMiembroData()">
 
-            <div class="modal-body">
-                <h3 class="subtitle text-primary">Datos personales</h3>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputEmail4">Nombre(s)</label>
-                        <input type="text" maxlength="15" minlength="3" onkeypress="return soloLetras(event)" required class="form-control" id="editarNombre" placeholder="NombreEditar" ng-model="editarEnlace.name">
+            <form ng-submit="editarMiembroData()">
+
+                <div class="modal-body">
+                    <h3 class="subtitle text-primary">Datos personales</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputEmail4">Nombre(s)</label>
+                            <input type="text" maxlength="15" minlength="3" onkeypress="return soloLetras(event)"
+                                required class="form-control" id="editarNombre" placeholder="NombreEditar"
+                                ng-model="editarMiembro.name">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword4">Apellido(s)</label>
+                            <input type="text" onkeypress=" return soloLetras(event)" maxlength="20" minlength="4"
+                                required class="form-control" id="editarApellido" placeholder="ApellidoEditar"
+                                ng-model="editarMiembro.lastname">
+                        </div>
+
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputPassword4">Apellido(s)</label>
-                        <input type="text" onkeypress=" return soloLetras(event)" maxlength="20" minlength="4"  required class="form-control" id="editarApellido" placeholder="ApellidoEditar" ng-model="editarEnlace.lastname">
+
+                    <h3 class="subtitle text-primary">Datos de Contacto</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="email">Correo electronico</label>
+                            <input type="email" required class="form-control" id="editarCorreo"
+                                placeholder="sicove@gmail.com" ng-model="editarMiembro.email"
+                                ng-value="editarMiembro.email">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Teléfono</label>
+                            <input type="tel" maxlength="10" minlength="10" onkeypress="return soloNumeros(event)"
+                                required class="form-control" id="editarTelefono" placeholder="7775975961"
+                                ng-model="editarMiembro.phoneNumber">
+                        </div>
                     </div>
-                    
+
+                    <h3 class="subtitle text-primary">Domicilio</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+
+                            <label for="CodigoPostal">
+                                Código Postal</label>
+                            <select id="CodigoPostal" class="form-control" ng-model="editarMiembro.residence.zipCode"
+                               required ng-options="codigo.cp as codigo.cp for codigo in cps" ng-change="getData2()">
+                               <option value="">--Elige opcion--</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="Municipio">
+                                Delegación / Municipio</label>
+                            <select id="Municipio" class="form-control" ng-model="editarMiembro.residence.municipality" required 
+                            ng-options="municipioo.response.municipio as municipioo.response.municipio for municipioo in domicilioData | limitTo : 1" >
+                            <option value="">--Elige opcion--</option>
+                            </select>
+                            
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="Colonia">
+                                Colonia / Asentamiento</label>
+                            <select id="Colonia" class="form-control" ng-model="editarMiembro.residence.locality" required
+                            ng-options="colonia.response.asentamiento as colonia.response.asentamiento for colonia in colonias" >
+                            <option value="">--Elige opcion--</option>
+                        </select>
+                           
+
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="inputAddress" required>Calle</label>
+                            <input type="text" class="form-control" id="calle" onkeypress="return alfanumerico(event)"
+                                placeholder="Lomas verdes" required maxlength="20" minlength="4"
+                                ng-model="editarMiembro.residence.street">
+                        </div>
+                    </div>
+                    <h3 class="subtitle text-primary">Posición</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="Posicion">Posición</label>
+                       
+
+                            <select id="Posicion" class="form-control" ng-model="editarMiembro.position.position" required
+                            ng-options="posicion.position as posicion.position for posicion in posiciones " ng-change="mostrarUserPassword()">
+                            <option value="">--Elige opcion--</option>
+                        </select>
+                        </div>
+
+                    </div>
+                    <div ng-show="mostrarSeccionUser">
+                    <h3 class="subtitle text-primary">Datos de inicio de sesión</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Correo</label>
+                            <input type="email"  class="form-control" id="correoPersonal"
+                                placeholder="monica@gmail.com" ng-model="editarMiembro.user.username">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword4">Contraseña </label>
+                            <input type="password"  class="form-control" id="passwordPersonal"
+                                placeholder="2DS1V43e" minlength="4" ng-model="editarMiembro.user.password">
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-row" ng-repeat="error in errores" ng-if="errores">
+                        <span class="col-12 invalid-tooltip4">
+                            <i class="material-icons">error</i> {{error}}
+                        </span>
+
+                    </div>
+                    {{editarMiembro}}
                 </div>
 
-                <h3 class="subtitle text-primary">Datos de Contacto</h3>
-                <div class="form-row">
-                   <div class="form-group col-md-6">
-                       <label for="email">Correo electronico</label>
-                       <input type="email" required class="form-control" id="editarCorreo" placeholder="sicove@gmail.com" ng-model="editarEnlace.email" ng-value="editarEnlace.email" >
-                   </div>
-                   <div class="form-group col-md-6">
-                       <label for="inputPassword4">Teléfono</label>
-                       <input type="tel"  maxlength="10" minlength="10" onkeypress="return soloNumeros(event)" required class="form-control" id="editarTelefono" placeholder="7775975961" ng-model="editarEnlace.phoneNumber">
-                   </div>
-               </div>
-
-               <h3 class="subtitle text-primary">Domicilio</h3>
-               <div class="form-row">
-                   <div class="form-group col-md-6">
-                       <label for="Municipio">
-                           Delegación / Municipio</label>
-                           <input type="text" onkeypress="return soloLetras(event)" maxlength="20" minlength="5" required class="form-control" id="EditarMunicipio" placeholder="Jiutepec" ng-model="editarEnlace.residence.municipality">
-
-                   </div>
-                   <div class="form-group col-md-6">
-                       <label for="Colonia">
-                           Colonia / Asentamiento</label>
-                           <input type="text" onkeypress="return soloLetras(event)" maxlength="20" minlength="5" required class="form-control" id="editarColonia" placeholder="Constitucion" ng-model="editarEnlace.residence.locality">
-                   </div>
-               </div>
-               <div class="form-row">
-                   <div class="form-group col-md-8">
-                       <label for="inputAddress" required>Calle</label>
-                       <input type="text" maxlength="20" minlength="4"  onkeypress="return alfanumerico(event)" class="form-control" id="editarCalle" placeholder="Lomas verdes" required  ng-model="editarEnlace.residence.street">
-                   </div>
-                   <div class="form-group col-md-4">
-                       <label for="inputCity">Codigo postal</label>
-                       <input type="number" maxlength="5" minlength="5" onkeypress="return soloNumeros(event)"  required class="form-control" id="editarCodigopostal"  ng-model="editarEnlace.residence.zipCode">
-                   </div>
-               </div>
-               <div class="form-row"  ng-repeat="error in errores" ng-if="errores">  
-                   <span  class="col-12 invalid-tooltip4"  >
-                       <i
-                        class="material-icons">error</i>   {{error}}    
-                    </span>
-                    
-               </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">Cancelar</button>
-                <button type="submit" id="editar" class="btn btn-primary btn-round"><i
-                        class="material-icons">check</i>Guardar cambios</button>
-            </div>
-        </form>
-     </div>
- </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="editar" class="btn btn-primary btn-round"><i
+                            class="material-icons">check</i>Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!-- FIN EDITAR MODAL -->
@@ -318,26 +394,26 @@
 <!-- ELIMINAR MODAL -->
 
 <div style="margin-top: 80px;" class="modal fade" id="borrarModal" tabindex="-1" role="dialog"
- aria-labelledby="exampleModalLabel" aria-hidden="true">
- <div class="modal-dialog" role="document">
-     <div class="modal-content">
-         <div class="modal-header">
-             <h3 class="modal-title text-primary title" id="exampleModalLabel">Eliminar miembro</h3>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-             </button>
-         </div>
-         <div class="modal-body">
-             ¿Está seguro que desea eliminar este registro?
-         </div>
-         <div class="modal-footer">
-             <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">Cancelar</button>
-             <button id="exitoBtn" type="submit" data-dismiss="modal" class="btn btn-danger btn-round" ng-click="deleteMiembro()"><i
-                class="material-icons">delete_forever</i>
-            Eliminar</button>
-         </div>
-     </div>
- </div>
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-primary title" id="exampleModalLabel">Eliminar miembro</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro que desea eliminar este registro?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">Cancelar</button>
+                <button id="exitoBtn" type="submit" data-dismiss="modal" class="btn btn-danger btn-round"
+                    ng-click="deleteMiembro()"><i class="material-icons">delete_forever</i>
+                    Eliminar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- FIN ELIMINAR MODAL-->
