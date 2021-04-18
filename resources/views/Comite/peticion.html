@@ -1,5 +1,4 @@
-
-    <div class="page-header header-filter" data-parallax="true"
+<div class="page-header header-filter" data-parallax="true"
     style="background-image: url('./material-kit-master/assets/img/bgMorelos2.jpg')">
     <div class="container">
         <div class="row">
@@ -13,79 +12,31 @@
     </div>
 </div>
 <div class="main main-raised">
-    <div class="container">
+    <div class="container" ng-init="getPeticiones()">
 
         <h2 style="padding-top: 20px;" class="title text-primary text-center">Solicitudes de Apoyo</h2>
         <button class="btn btn-rose btn-round btn-md" data-toggle="modal" data-target="#crearModal"> <i
                 class="material-icons">add_circle_outline</i> Registrar nueva solicitud de apoyo
         </button>
 
-        <div class="row">
+        <div class="row" ng-repeat="peticion in peticiones">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header card-header-warning">
                         <div class="card-icon">
-                            <h4 class="card-title">Drenaje dañado</h4>
-                            <p class="category">Emiliano Zapata</p>
+                            <h4 class="card-title">{{peticion.committee}}</h4>
+                            <p class="category">{{peticion.date}}</p>
                         </div>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">A lo largo de la Av. Revolución se ha reportado la presencia de
-                            una fuga de agua debido a un drenaje dañado.</p>
-                        <a href="./comentario.html" class="btn btn-primary">Revisar</a>
-                        <btn data-toggle="modal" data-target="#editarModal" class="btn btn-warning">Editar</btn>
-                        <btn data-toggle="modal" data-target="#borrarModal" class="btn btn-danger">Eliminar</btn>                        </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header card-header-warning">
-                        <div class="card-icon">
-                            <h4 class="card-title">Cortes de luz constantes</h4>
-                            <p class="category">Temixco</p>
-                        </div>
+                        <p class="card-text">{{peticion.description}}</p>
+                        <a ng-href="#/comite/comentario.html" ng-click="revisarPeticion(peticion.id)" class="btn btn-primary"> <i
+                                class="material-icons">visibility</i>Revisar</a>
+                        <btn data-toggle="modal" ng-click="editarPeticionData(peticion)" data-target="#editarModal" class="btn btn-warning"> <i
+                                class="material-icons">edit</i>Editar</btn>
+                        <btn data-toggle="modal" ng-click="borrarPeticion(peticion.id)" data-target="#borrarModal" class="btn btn-danger"> <i
+                                class="material-icons">clear</i>Eliminar</btn>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text">En estos últimos días se han presentado diversos cortes de
-                            luz en diversas localidades del municipio de Temixco.</p>
-                        <a href="./comentario.html" class="btn btn-primary">Revisar</a>
-                        <btn data-toggle="modal" data-target="#editarModal" class="btn btn-warning">Editar</btn>
-                        <btn data-toggle="modal" data-target="#borrarModal" class="btn btn-danger">Eliminar</btn>                        </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header card-header-warning">
-                        <div class="card-icon">
-                            <h4 class="card-title">Drenaje dañado</h4>
-                            <p class="category">Emiliano Zapata</p>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">A lo largo de la Av. Revolución se ha reportado la presencia de
-                            una fuga de agua debido a un drenaje dañado.</p>
-                        <a href="./comentario.html" class="btn btn-primary">Revisar</a>
-                        <btn data-toggle="modal" data-target="#editarModal" class="btn btn-warning">Editar</btn>
-                        <btn data-toggle="modal" data-target="#borrarModal" class="btn btn-danger">Eliminar</btn>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header card-header-warning">
-                        <div class="card-icon">
-                            <h4 class="card-title">Cortes de luz constantes</h4>
-                            <p class="category">Temixco</p>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">En estos últimos días se han presentado diversos cortes de
-                            luz en diversas localidades del municipio de Temixco.</p>
-                        <a href="./comentario.html" class="btn btn-primary">Revisar</a>
-                        <btn data-toggle="modal" data-target="#editarModal" class="btn btn-warning">Editar</btn>
-                        <btn data-toggle="modal" data-target="#borrarModal" class="btn btn-danger">Eliminar</btn>                        </div>
                 </div>
             </div>
         </div>
@@ -100,13 +51,14 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h2 class="modal-title text-primary title" id="exampleModalLabel">Registrar nueva solicitud de apoyo</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h2 class="modal-title text-primary title" id="exampleModalLabel">Registrar nueva solicitud de apoyo
+                </h2>
+                <button type="button" class="close" id="CerrarCrear" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
-            <form action="" method="post">
+            <form ng-submit="registrarPeticion()">
 
                 <div class="modal-body">
                     <h3 class="subtitle text-primary">Datos de la solicitud</h3>
@@ -119,7 +71,7 @@
                                         <i class="material-icons">question_answer</i>
                                     </span>
                                 </div>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                                <textarea ng-model="peticionData.description" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
@@ -147,12 +99,12 @@
 
             <div class="modal-header">
                 <h2 class="modal-title text-primary title" id="exampleModalLabel">Editar solicitud de apoyo</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" id="CerrarEditar" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
-            <form action="" method="post">
+            <form ng-submit="editarPeticion()">
 
                 <div class="modal-body">
                     <h3 class="subtitle text-primary">Datos de la solicitud</h3>
@@ -165,7 +117,7 @@
                                         <i class="material-icons">question_answer</i>
                                     </span>
                                 </div>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                                <textarea ng-model="peticionEdit.description" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
@@ -191,7 +143,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title text-primary title" id="exampleModalLabel">Eliminar solicitud de apoyo</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" id="CerrarEliminar" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -200,7 +152,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">Cancelar</button>
-                <button id="exitoBtn" type="submit" data-dismiss="modal" class="btn btn-danger btn-round"><i
+                <button id="exitoBtn" ng-click="deletePeticion()" type="submit" data-dismiss="modal" class="btn btn-danger btn-round"><i
                         class="material-icons">delete_forever</i>
                     Eliminar</button>
             </div>
@@ -209,7 +161,6 @@
 </div>
 
 <!-- FIN ELIMINAR MODAL-->
-
 
 <script>
     $(function () {
