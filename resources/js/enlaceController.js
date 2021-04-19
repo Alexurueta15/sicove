@@ -771,4 +771,263 @@ app.controller('enlaceController', function ($scope, $http, APP_DEFAULT_URL, $wi
 
 	};
 
+	/* C R U D   P E T I C I O N E S / C O M E N T A R I O S   E N L A C E */
+
+    $scope.getPeticionesEnlace = function () {
+		$http
+		  .get(APP_DEFAULT_URL.url + 'enlace/application', {
+			headers: {
+			  Accept: '*/*',
+			  'Content-Type': 'application/json',
+			  Authorization: 'Bearer ' + $scope.token,
+  
+			  'Access-Control-Allow-Origin': 'http://localhost:8080',
+			  'Access-Control-Allow-Methods': '*',
+			  'Access-Control-Allow-Headers': 'Content-Type',
+			  'Access-Control-Allow-Headers': 'Authorization',
+			},
+		  })
+		  .then(function (response2) {
+			$scope.peticionesEnlace = response2.data;
+		  });
+	  };
+  
+	  $scope.editarPeticionData = function (peticion) {
+		$scope.editarPeticion = angular.copy(peticion);
+		$('#editarModal').modal('show');
+	  };
+  
+	  $scope.editPeticion = function () {
+		$scope.actualizarData = {
+		  id: $scope.editarPeticion.id,
+		  committee: { id: $scope.editarPeticion.committee.id },
+		  description: $scope.editarPeticion.description,
+		};
+  
+		$http
+		  .put(
+			APP_DEFAULT_URL.url + 'enlace/application',
+			$scope.actualizarData,
+			{
+			  headers: {
+				Accept: '*/*',
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + $scope.token,
+  
+				'Access-Control-Allow-Origin': 'http://localhost:8080',
+				'Access-Control-Allow-Methods': 'PUT',
+				'Access-Control-Allow-Headers': 'Content-Type',
+				'Access-Control-Allow-Headers': 'Authorization',
+			  },
+			}
+		  )
+		  .then(function (response) {
+			if (response.data.statusCode == 200) {
+			  Swal.fire('Exito', 'Actualizacion correcta', 'success');
+			  $('#CerrarEditar').click();
+			  $scope.getPeticiones();
+			} else {
+			  Swal.fire(
+				'Advertencia',
+				'La actualizacion no puede realizarse',
+				'warning'
+			  );
+			}
+		  });
+	  };
+  
+	  $scope.borrarPeticion = function (id) {
+		$scope.varBorrarPeticion = id;
+		$('#borrarModal').modal('show');
+	  };
+  
+	  $scope.deletePeticion = function () {
+		$scope.borrar = {
+		  id: $scope.varBorrarPeticion,
+		  status: { id: '607765b67ab019214b606fa9', status: 'Cancelada' },
+		};
+  
+		console.log('PATCH');
+		console.log($scope.borrar);
+		$http({
+		  method: 'PATCH',
+		  url: APP_DEFAULT_URL.url + 'enlace/application',
+		  data: $scope.borrar,
+		  headers: {
+			Accept: '*/*',
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + $scope.token,
+			'Access-Control-Allow-Origin': 'http://localhost:8080',
+			'Access-Control-Allow-Methods': '*',
+			'Access-Control-Allow-Headers': 'Content-Type',
+			'Access-Control-Allow-Headers': 'Authorization',
+		  },
+		}).then(function (response) {
+		  if (response.data.statusCode == 200) {
+			Swal.fire('Exito', 'Eliminación correcta', 'success');
+			$('#CerrarEliminar').click();
+			$scope.getPeticionesEnlace();
+		  } else {
+			Swal.fire(
+			  'Advertencia',
+			  'La eliminación no puede realizarse',
+			  'warning'
+			);
+		  }
+		});
+	  };
+  
+	  $scope.getComentariosEnlace = function () {
+		  $scope.revisarE = {
+			id: $window.localStorage.getItem('idApp')
+		  };
+		  console.log('$scope.revisar');
+	
+		  console.log($scope.revisarE);
+		  $http
+			.post(
+			  APP_DEFAULT_URL.url + 'enlace/application/comentario',
+			  $scope.revisarE,
+			  {
+				headers: {
+				  Accept: '*/*',
+				  'Content-Type': 'application/json',
+				  Authorization: 'Bearer ' + $scope.token,
+	
+				  'Access-Control-Allow-Origin': 'http://localhost:8080',
+				  'Access-Control-Allow-Methods': '*',
+				  'Access-Control-Allow-Headers': 'Content-Type',
+				  'Access-Control-Allow-Headers': 'Authorization',
+				},
+			  }
+			)
+			.then(function (response) {
+			  $scope.comentariosEnlace = response.data;
+			});
+		};
+  
+		$scope.registrarComentarioEnlace = function () {
+		  $scope.addCommentToEnlace = {
+			application: $window.localStorage.getItem('idApp')
+		  };
+	
+		  console.log('$scope.addCommentToEnlace');
+		  console.log($scope.addCommentToEnlace);
+	
+		  $http
+			.post(
+			  APP_DEFAULT_URL.url + 'enlace/application/comment',
+			  $scope.addCommentToEnlace,
+			  {
+				headers: {
+				  Accept: '*/*',
+				  'Content-Type': 'application/json',
+				  Authorization: 'Bearer ' + $scope.token,
+	
+				  'Access-Control-Allow-Origin': 'http://localhost:8080',
+				  'Access-Control-Allow-Methods': '*',
+				  'Access-Control-Allow-Headers': 'Content-Type',
+				  'Access-Control-Allow-Headers': 'Authorization',
+				},
+			  }
+			)
+			.then(function (response) {
+			  if (response.data.statusCode == 200) {
+				Swal.fire('Exito', 'Registro correcto', 'success');
+				$scope.addCommentToEnlace.message = {};
+				$scope.getComentariosEnlace();
+				$('#CerrarCrear').click();
+			  } else {
+				Swal.fire(
+				  'Advertencia',
+				  'El registro no pudo realizarse',
+				  'warning'
+				);
+			  }
+			});
+		};
+  
+	  $scope.getEstados = function () {
+		$('#estadoModal').modal('show');
+  
+		$http
+		  .get(APP_DEFAULT_URL.url + 'enlace/application/status', {
+			headers: {
+			  Accept: '*/*',
+			  'Content-Type': 'application/json',
+			  Authorization: 'Bearer ' + $scope.token,
+  
+			  'Access-Control-Allow-Origin': 'http://localhost:8080',
+			  'Access-Control-Allow-Methods': '*',
+			  'Access-Control-Allow-Headers': 'Content-Type',
+			  'Access-Control-Allow-Headers': 'Authorization',
+			},
+		  })
+		  .then(function (response) {
+			$scope.estados = response.data;
+		  });
+	  };
+  
+	  $scope.revisarPeticion = function (id) {
+		  $window.localStorage.setItem('idApp', id);
+	  }
+  
+	  $scope.getEstados = function () {
+		  $scope.petiData = {
+			  id: $window.localStorage.getItem('idApp'),
+			};
+  
+		  $http
+			.post(APP_DEFAULT_URL.url + 'enlace/application/one', $scope.petiData, {
+			  headers: {
+				Accept: '*/*',
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + $scope.token,
+	
+				'Access-Control-Allow-Origin': 'http://localhost:8080',
+				'Access-Control-Allow-Methods': '*',
+				'Access-Control-Allow-Headers': 'Content-Type',
+				'Access-Control-Allow-Headers': 'Authorization',
+			  },
+			})
+			.then(function (response) {
+			  $scope.peticionActual = response.data;
+			});
+		};
+  
+	  $scope.editarStatus = function () {
+		$scope.statusData = {
+		  id: $window.localStorage.getItem('idApp'),
+		  status: JSON.parse($scope.peticionStatusData.status)
+		};
+  
+		console.log($scope.statusData);
+		$http({
+		  method: 'PATCH',
+		  url: APP_DEFAULT_URL.url + 'enlace/application',
+		  data: $scope.statusData,
+		  headers: {
+			Accept: '*/*',
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + $scope.token,
+			'Access-Control-Allow-Origin': 'http://localhost:8080',
+			'Access-Control-Allow-Methods': '*',
+			'Access-Control-Allow-Headers': 'Content-Type',
+			'Access-Control-Allow-Headers': 'Authorization',
+		  },
+		}).then(function (response) {
+		  if (response.data.statusCode == 200) {
+			Swal.fire('Exito', 'Eliminación correcta', 'success');
+			$('#CerrarEliminar').click();
+			$scope.getPeticionesEnlace();
+		  } else {
+			Swal.fire(
+			  'Advertencia',
+			  'La eliminación no puede realizarse',
+			  'warning'
+			);
+		  }
+		});
+	  };
+
 });

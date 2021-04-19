@@ -19,23 +19,21 @@
                 class="material-icons">add_circle_outline</i> Registrar nueva solicitud de apoyo
         </button>
 
-        <div class="row" ng-repeat="peticion in peticiones">
-            <div class="col-md-6">
+        <div class="row" >
+            <div class="col-md-6" ng-repeat="peticion in peticiones">
                 <div class="card">
                     <div class="card-header card-header-warning">
                         <div class="card-icon">
-                            <h4 class="card-title">{{peticion.committee}}</h4>
-                            <p class="category">{{peticion.date}}</p>
+                            <h4 class="card-title">{{peticion.committee.alias}}</h4>
+                            <p class="category">{{peticion.date | date:'medium'}}</p>
                         </div>
                     </div>
                     <div class="card-body">
                         <p class="card-text">{{peticion.description}}</p>
-                        <a ng-href="#/comite/comentario.html" ng-click="revisarPeticion(peticion.id)" class="btn btn-primary"> <i
+                        <a ng-href="#/comite/comentario" ng-click="revisarPeticion(peticion.id)" class="btn btn-primary"> <i
                                 class="material-icons">visibility</i>Revisar</a>
                         <btn data-toggle="modal" ng-click="editarPeticionData(peticion)" data-target="#editarModal" class="btn btn-warning"> <i
                                 class="material-icons">edit</i>Editar</btn>
-                        <btn data-toggle="modal" ng-click="borrarPeticion(peticion.id)" data-target="#borrarModal" class="btn btn-danger"> <i
-                                class="material-icons">clear</i>Eliminar</btn>
                     </div>
                 </div>
             </div>
@@ -58,7 +56,7 @@
                 </button>
             </div>
 
-            <form ng-submit="registrarPeticion()">
+            <form ng-submit="registrarPeticion()" name="formCrearPeticion">
 
                 <div class="modal-body">
                     <h3 class="subtitle text-primary">Datos de la solicitud</h3>
@@ -71,16 +69,25 @@
                                         <i class="material-icons">question_answer</i>
                                     </span>
                                 </div>
-                                <textarea ng-model="peticionData.description" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                                <textarea type="text" name="descripcion" required ng-model="peticionData.description" ng-minlength="5" ng-maxlength="200" class="form-control" id="" rows="5"></textarea>
+                                    <span class="invalid-tooltip2" ng-show="showError(formCrearPeticion.descripcion, 'required')">
+                                      Campo obligatorio
+                                    </span>
+                                    <span class="invalid-tooltip2" ng-show="showError(formCrearPeticion.descripcion, 'minlength')">
+                                      Longitud mínima: 5
+                                    </span>
+                                    <span class="invalid-tooltip2" ng-show="showError(formCrearPeticion.descripcion, 'maxlength')">
+                                      Longitud máxima: 200
+                                    </span>
                             </div>
                         </div>
                     </div>
                 </div>
-
+           
                 <div class="modal-footer">
                     <button id="falloBtn" type="button" class="btn btn-primary btn-link"
                         data-dismiss="modal">Cancelar</button>
-                    <button id="exitoBtn" type="submit" class="btn btn-primary btn-round"><i
+                    <button id="exitBtn" type="submit" class="btn btn-primary btn-round"><i
                             class="material-icons">check</i>Registrar solicitud</button>
                 </div>
             </form>
@@ -104,20 +111,20 @@
                 </button>
             </div>
 
-            <form ng-submit="editarPeticion()">
+            <form ng-submit="editPeticion()" name="formEditarPeticion">
 
                 <div class="modal-body">
                     <h3 class="subtitle text-primary">Datos de la solicitud</h3>
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="inputEmail4">Descripción</label>
+                            <label for="desc">Descripción</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="material-icons">question_answer</i>
                                     </span>
                                 </div>
-                                <textarea ng-model="peticionEdit.description" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                                <textarea required ng-model="editarPeticion.description" class="form-control" id="" rows="5"></textarea>
                             </div>
                         </div>
                     </div>

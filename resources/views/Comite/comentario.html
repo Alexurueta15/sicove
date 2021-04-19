@@ -15,53 +15,39 @@
     <div class="container">
 
         <h2 style="padding-top: 20px;" class="title text-primary text-center">Detalles de Solicitud de Apoyo</h2>
-        <button class="btn btn-rose btn-round btn-md" ng-click="getEstados()" data-toggle="modal"
-            data-target="#estadoModal"> <i class="material-icons">edit</i> Cambiar estado de solicitud
-        </button>
-
+        
         <div class="card card-nav-tabs text-center">
             <div class="card-header card-header-warning">
                 <h4 class="card-title">
                     Comentarios
                 </h4>
             </div>
-            <div class="card-body" ng-init="getComentarios()">
+            <div class="card-body">
                 <h4 class="card-title">{{peticionActual.committee.alias}}</h4>
-                <p class="badge badge-info">Estado actual: {{peticionActual.status.status]}}</p>
-                <p class="card-text">{{peticionActual.description}}
-                </p>
-                <table class="table table-hover">
+                <p class="badge badge-info">Estado actual: {{peticionActual.status.status}}</p>
+                <p class="card-text">D:{{peticionActual.description}}</p>
+                <table class="table table-hover" ng-init="getComentarios()">
                     <tbody>
                         <tr ng-repeat="comentario in comentarios">
                             <td>
                                 <div class="container text-left">
                                     <p class="badge badge-primary">{{comentario.sender.name}}
-                                        {{comentario.sender.lastname}} - {{comentario.date}}</p>
+                                        {{comentario.sender.lastname}} - {{comentario.date | date:'short'}}</p>
                                     <p>{{comentario.message}}</p>
                                 </div>
-                            </td>
-                            <td>
-                                <button class="btn btn-warning btn-fab btn-fab-mini btn-round" data-toggle="modal"
-                                    data-target="#editarModal">
-                                    <i class="material-icons">create</i>
-                                </button>
-                                <button class="btn btn-danger btn-fab btn-fab-mini btn-round" data-toggle="modal"
-                                    data-target="#borrarModal">
-                                    <i class="material-icons">clear</i>
-                                </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
 
-                <form ng-init="registrarComentario()">
+                <form ng-submit="registrarComentario()">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i class="material-icons">question_answer</i>
                             </span>
                         </div>
-                        <textarea ng-model="comentarioData.message" class="form-control"
+                        <textarea ng-model="addCommentTo.message" class="form-control"
                             id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                     <div class="text-right">
