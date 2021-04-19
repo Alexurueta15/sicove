@@ -7,82 +7,67 @@
                         <h1>Comité Vecinal</h1>
                         <h3 class="title text-center">Estado de Morelos</h3>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="main main-raised">
-        <div class="container">
-            <h2 style="padding-top: 20px;" class="title text-primary text-center">Solicitudes de Apoyo</h2>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header card-header-warning">
-                            <div class="card-icon">
-                                <h4 class="card-title">Drenaje dañado</h4>
-                                <p class="category">Emiliano Zapata</p>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">A lo largo de la Av. Revolución se ha reportado la presencia de
-                                una fuga de agua debido a un drenaje dañado.</p>
-                            <a ng-href="#/enlace/comentario" class="btn btn-primary">Revisar</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header card-header-warning">
-                            <div class="card-icon">
-                                <h4 class="card-title">Cortes de luz constantes</h4>
-                                <p class="category">Temixco</p>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">En estos últimos días se han presentado diversos cortes de
-                                luz en diversas localidades del municipio de Temixco.</p>
-                            <a href="./comentario.html" class="btn btn-primary">Revisar</a>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header card-header-warning">
-                            <div class="card-icon">
-                                <h4 class="card-title">Drenaje dañado</h4>
-                                <p class="category">Emiliano Zapata</p>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">A lo largo de la Av. Revolución se ha reportado la presencia de
-                                una fuga de agua debido a un drenaje dañado.</p>
-                            <a href="./comentario.html" class="btn btn-primary">Revisar</a>
+        </div>
+    </div>
+</div>
+<div class="main main-raised">
+    <div class="container" ng-init="getPeticionesEnlace()">
+
+        <h2 style="padding-top: 20px;" class="title text-primary text-center">Solicitudes de Apoyo</h2>
+
+        <div class="row" >
+            <div class="col-md-6" ng-repeat="peticion in peticionesEnlace">
+                <div class="card">
+                    <div class="card-header card-header-warning">
+                        <div class="card-icon">
+                            <h4 class="card-title">{{peticion.committee.alias}}</h4>
+                            <p class="category">{{peticion.date | date:'medium'}}</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header card-header-warning">
-                            <div class="card-icon">
-                                <h4 class="card-title">Cortes de luz constantes</h4>
-                                <p class="category">Temixco</p>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">En estos últimos días se han presentado diversos cortes de
-                                luz en diversas localidades del municipio de Temixco.</p>
-                            <a href="./comentario.html" class="btn btn-primary">Revisar</a>
-                        </div>
+                    <div class="card-body">
+                        <p class="card-text">{{peticion.description}}</p>
+                        <a ng-href="#/enlace/comentario" ng-click="revisarPeticion(peticion.id)" class="btn btn-primary"> <i
+                                class="material-icons">visibility</i>Revisar</a>
+                        <btn data-toggle="modal" ng-click="borrarPeticion(peticion.id)" data-target="#borrarModal" class="btn btn-danger"> <i
+                                class="material-icons">clear</i>Eliminar</btn>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script>
+</div>
+
+<!-- ELIMINAR MODAL -->
+
+<div style="margin-top: 80px;" class="modal fade" id="borrarModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-primary title" id="exampleModalLabel">Eliminar solicitud de apoyo</h3>
+                <button type="button" class="close" id="CerrarEliminar" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro que desea eliminar este registro?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">Cancelar</button>
+                <button id="exitoBtn" ng-click="deletePeticion()" type="submit" data-dismiss="modal" class="btn btn-danger btn-round"><i
+                        class="material-icons">delete_forever</i>
+                    Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FIN ELIMINAR MODAL-->
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
