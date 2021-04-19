@@ -271,7 +271,7 @@
                             <label for="CodigoPostal">
                                 Código Postal</label>
                             <select id="CodigoPostal" class="form-control" ng-model="editarEnlace.residence.zipCode"
-                               required ng-options="codigo.cp for codigo in cps">
+                               required ng-options="codigo.cp as codigo.cp for codigo in cps" ng-change="getData2()">
                                 
                             </select>
                         </div>
@@ -279,7 +279,7 @@
                             <label for="Municipio">
                                 Delegación / Municipio</label>
                             <select id="Municipio" class="form-control" ng-model="editarEnlace.residence.municipality" required 
-                            ng-options="municipioo.response.municipio for municipioo in domicilioData | limitTo : 1" >
+                            ng-options="municipioo.response.municipio as municipioo.response.municipio for municipioo in domicilioData | limitTo : 1" >
                             </select>
                      
                         </div>
@@ -289,7 +289,9 @@
                             <label for="Colonia">
                                 Colonia / Asentamiento</label>
                             <select id="Colonia" class="form-control" ng-model="editarEnlace.residence.locality" required
-                            ng-options="colonia.response.asentamiento for colonia in colonias" ></select>
+                            ng-options="colonia.response.asentamiento as colonia.response.asentamiento for colonia in colonias" >
+                            <option value="">--Elige opcion--</option>
+                        </select>
                            
 
                         </div>

@@ -6,14 +6,41 @@ app.controller('loginController', function ($scope, $http, APP_DEFAULT_URL, $win
 		var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
 		var jsonPayload = decodeURIComponent(
 			atob(base64)
-				.split("")
-				.map(function (c) {
-					return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-				})
-				.join("")
+			.split("")
+			.map(function (c) {
+				return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+			})
+			.join("")
 		);
 		return JSON.parse(jsonPayload);
 
+	}
+
+	$scope.validarSesion = function () {
+		$scope.token = JSON.parse($window.localStorage.getItem("token"));
+
+		if ($scope.token != null) {
+			$scope.sesion = $scope.desconversion($scope.token);
+			console.log($scope.sesion);
+			if ($scope.sesion.role == "Administrador") {
+				$window.location.href = "#/administrar/admin";
+
+			}
+
+			if ($scope.sesion.role == "Enlace") {
+				$window.location.href = "#/enlace/comite";
+			}
+
+			if ($scope.sesion.role == "Comité") {
+
+				$window.location.href = "#/comite/peticion";
+
+			}
+
+		} else {
+			$window.location.href = "#/";
+
+		}
 	}
 
 	$scope.inicioSesion = function () {
@@ -35,28 +62,28 @@ app.controller('loginController', function ($scope, $http, APP_DEFAULT_URL, $win
 				console.log($scope.rolToken);
 				if ($scope.rolToken.role == "Administrador") {
 					console.log("administrador")
-					$window.location.href = "#/administrar/admin"; 	
+					$window.location.href = "#/administrar/admin";
 					$window.setTimeout(() => {
-			
-					}, 3000);	
+
+					}, 3000);
 					$window.location.reload();
 				}
 
 				if ($scope.rolToken.role == "Enlace") {
 					console.log("enlace")
-					$window.location.href = "#/enlace/comite"; 
+					$window.location.href = "#/enlace/comite";
 					$window.setTimeout(() => {
-			
-					}, 3000);	
-					$window.location.reload();	
+
+					}, 3000);
+					$window.location.reload();
 				}
 
 				if ($scope.rolToken.role == "Comité") {
 					console.log("Miembro comite")
-					$window.location.href = "#/comite/peticion"; 
+					$window.location.href = "#/comite/peticion";
 					$window.setTimeout(() => {
-			
-					}, 3000);	
+
+					}, 3000);
 					$window.location.reload();
 				}
 

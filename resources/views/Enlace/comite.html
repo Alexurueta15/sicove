@@ -104,11 +104,17 @@
                          <label for="inputEmail4">Alias</label>
                          <input type="text" onkeypress="return soloLetras(event)"  required class="form-control" id="alias" placeholder="DSE" maxlength="5" minlength="3" ng-model="comiteData.alias">
                      </div>
-                     <div class="form-group col-md-6">
+                    <div class="form-group col-md-6">
                          <label for="Municipio">
                              Delegación / Municipio al que pertenece</label>
-                             <input type="text" required onkeypress="return soloLetras(event)" maxlength="20" minlength="5"  class="form-control" id="municipio" placeholder="Jiutepec" ng-model="comiteData.municipality">
-                     </div>
+                             <select id="Municipio" class="form-control" ng-model="comiteData.municipality" required>
+                             <option value="" selected>Elije una opcion</option>
+                             <option ng-repeat="municipio in municipiosMor.response.municipios" value="{{municipio}}">{{municipio}}</option>
+
+                         </select>
+                     
+                    </div>
+                    {{comiteData}}
                  </div>
                 
              </div>
@@ -153,7 +159,10 @@
                      <div class="form-group col-md-6">
                          <label for="Municipio">
                              Delegación / Municipio al que pertenece</label>
-                             <input type="text" onkeypress="return soloLetras(event)" maxlength="20" minlength="5" required class="form-control" id="EditarMunicipio" placeholder="Jiutepec" ng-model="editarComite.municipality">
+                             <select id="Municipio" class="form-control" ng-model="editarComite.municipality" required 
+                            ng-options="municipio as municipio for municipio in municipiosMor.response.municipios" >
+                            <option value="">--Elige opcion--</option>
+                            </select>
 
                      </div>
                  </div>

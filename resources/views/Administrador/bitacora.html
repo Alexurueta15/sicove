@@ -20,40 +20,27 @@
 
      <h2 style="padding-top: 20px;" class="title text-primary text-center">Bitácoras</h2>
 
-     <div class="row">
+     <div class="row" ng-init="getLogBook()">
          <div class="col-md-12">
-             <table class="table table-responsive-md table-hover">
+             <table class="table table-responsive-md table-hover" >
                  <thead class="table-primary">
                      <tr>
                          <th scope="col">Ruta de la petición</th>
+                         <th scope="col">Método</th>
+                         <th scope="col">Solicitante</th>
                          <th scope="col">Dirección IP</th>
                          <th scope="col">Fecha y hora</th>
-                         <th scope="col">Registro previo</th>
-                         <th scope="col">Registro posterior</th>
                      </tr>
                  </thead>
                  <tbody>
-                     <tr>
-                         <td>/sicove/admin/enlace/update</td>
-                         <td>192.168.32.115</td>
-                         <td>12-03-2021 03:46:18 p.m.</td>
-                         <td>Diego Manuel</td>
-                         <td>Diego Flores</td>
+                    <tr ng-repeat="logbook in logbooks">
+                         <td>{{logbook.uri}}</td>
+                         <td>{{logbook.method}}</td>
+                         <td>{{logbook.sender}}</td>
+                         <td>{{logbook.senderIP}}</td>
+                         <td>{{logbook.date}}</td>
                      </tr>
-                     <tr>
-                         <td>/sicove/admin/miembro/delete</td>
-                         <td>192.168.104.27</td>
-                         <td>29-02-2021 08:26:48 a.m.</td>
-                         <td>Manuel Montes de Oca</td>
-                         <td>-</td>
-                     </tr>
-                     <tr>
-                         <td>/sicove/enlace/miembro/create</td>
-                         <td>192.168.95.104</td>
-                         <td>08-03-2021 07:33:09 p.m.</td>
-                         <td>-</td>
-                         <td>Monica Perez</td>
-                     </tr>
+                     
                  </tbody>
              </table>
          </div>
