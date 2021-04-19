@@ -19,7 +19,7 @@
             data-target="#estadoModal"> <i class="material-icons">edit</i> Cambiar estado de solicitud
         </button>
 
-        <div class="card card-nav-tabs text-center">
+        <div ng-init="getInfo()" class="card card-nav-tabs text-center">
             <div class="card-header card-header-warning">
                 <h4 class="card-title">
                     Comentarios
@@ -50,8 +50,8 @@
                                 <i class="material-icons">question_answer</i>
                             </span>
                         </div>
-                        <textarea ng-model="addCommentToEnlace.message" class="form-control"
-                            id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea ng-model="nuevoComment.message" class="form-control" required minlength="5" maxlength="200"
+                            id="" rows="3"></textarea>
                     </div>
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary">Enviar comentario</button>

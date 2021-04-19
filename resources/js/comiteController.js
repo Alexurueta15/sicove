@@ -167,43 +167,34 @@ app.controller(
     /* C R U D   C O M E N T A R I O S */
 
     $scope.revisarPeticion = function (id) {
-      $scope.peticionActual.id = id;
-      console.log($scope.peticionActual);
+      $window.localStorage.setItem('idAppComite', id);
+    };
 
+    $scope.getInfo = function () {
+      $scope.petiData = {
+        id: $window.localStorage.getItem('idAppComite'),
+      };
       $http
-        .post(
-          APP_DEFAULT_URL.url + 'comite/application/one',
-          $scope.peticionActual,
-          {
-            headers: {
-              Accept: '*/*',
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + $scope.token,
+        .post(APP_DEFAULT_URL.url + 'comite/application/one', $scope.petiData, {
+          headers: {
+            Accept: '*/*',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + $scope.token,
 
-              'Access-Control-Allow-Origin': 'http://localhost:8080',
-              'Access-Control-Allow-Methods': '*',
-              'Access-Control-Allow-Headers': 'Content-Type',
-              'Access-Control-Allow-Headers': 'Authorization',
-            },
-          }
-        )
+            'Access-Control-Allow-Origin': 'http://localhost:8080',
+            'Access-Control-Allow-Methods': '*',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Headers': 'Authorization',
+          },
+        })
         .then(function (response) {
           $scope.peticionActual = response.data;
         });
     };
 
-    /*$scope.getInfoPet = function () {
-      console.log('$scope.peticionSolicitada');
-
-      $scope.prueba = { id: "607a2dcfd7fcf136e1ac493c" };
-      console.log($scope.prueba);
-
-      
-    };*/
-
     $scope.getComentarios = function () {
       $scope.revisar = {
-        id: '607a2dcfd7fcf136e1ac493c',
+        id: $window.localStorage.getItem('idAppComite'),
       };
       console.log('$scope.revisar');
 
@@ -227,13 +218,17 @@ app.controller(
         )
         .then(function (response) {
           $scope.comentarios = response.data;
-          $scope.peticionActual = $scope.varRevisarPeticion;
         });
     };
 
     $scope.registrarComentario = function () {
+      $scope.mensajitoDos = $scope.nuevoCommentComite;
+
+      console.log($scope.mensajitoDos);
+
       $scope.addCommentTo = {
-        application: $scope.peticionActual.id,
+        application: { id: $window.localStorage.getItem('idAppComite') },
+        message: $scope.mensajitoDos.message,
       };
 
       console.log('$scope.addCommentTo');
@@ -271,5 +266,68 @@ app.controller(
           }
         });
     };
+
+    $scope.getEstados = function () {
+      $('#estadoModal').modal('show');
+
+      $http
+        .get(APP_DEFAULT_URL.url + 'comite/application/status', {
+          headers: {
+            Accept: '*/*',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + $scope.token,
+
+            'Access-Control-Allow-Origin': 'http://localhost:8080',
+            'Access-Control-Allow-Methods': '*',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Headers': 'Authorization',
+          },
+        })
+        .then(function (response) {
+			let estados = response.data;
+		  estados.splice(0,2);
+		  $scope.estaditos=estados;
+        });
+    };
+
+    $scope.finalizarStatus = function () {
+      $scope.statusDataCom = {
+        id: $window.localStorage.getItem('idAppComite'),
+        status: JSON.parse($scope.peticionStatusDataCom.status)
+      };
+
+      console.log($scope.statusDataCom);
+      $http({
+        method: 'PATCH',
+        url: APP_DEFAULT_URL.url + 'comite/application',
+        data: $scope.statusDataCom,
+        headers: {
+          Accept: '*/*',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + $scope.token,
+          'Access-Control-Allow-Origin': 'http://localhost:8080',
+          'Access-Control-Allow-Methods': '*',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Headers': 'Authorization',
+        },
+      }).then(function (response) {
+        console.table(response)
+        if (response.data.statusCode == 200) {
+          Swal.fire('Exito', 'Eliminación correcta', 'success');
+          $('#CerrarEliminar').click();
+          $scope.getPeticiones();
+		  $scope.getInfo();
+        } else {
+          Swal.fire(
+            'Advertencia',
+            'La finalizacion no puede realizarse hasta que el enlace lo autorice',
+            'warning'
+          );
+        }
+      });
+    };
+
+
+
   }
 );
