@@ -1,6 +1,7 @@
 app.controller(
   'comiteController',
   function ($scope, $http, APP_DEFAULT_URL, $window) {
+
     $scope.token = JSON.parse($window.localStorage.getItem('token'));
     $scope.infoSesion = {};
     $scope.peticionActual = {};
@@ -8,45 +9,65 @@ app.controller(
     /* C R U D   P E T I C I O N E S */
 
     $scope.getPeticiones = function () {
-      $http
-        .get(APP_DEFAULT_URL.url + 'comite/committee', {
-          headers: {
-            Accept: '*/*',
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + $scope.token,
 
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
-            'Access-Control-Allow-Methods': '*',
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Allow-Headers': 'Authorization',
-          },
-        })
-        .then(function (response) {
-          $scope.infoSesion = response.data;
 
-          $scope.idComite = { id: $scope.infoSesion.id };
+      $scope.token = JSON.parse($window.localStorage.getItem("token"));
+
+      if ($scope.token != null) {
+        $scope.sesion = $scope.desconversion($scope.token);
+        console.log($scope.sesion);
+        if ($scope.sesion.role == "Comité") {
 
           $http
-            .post(
-              APP_DEFAULT_URL.url + 'comite/application/committee',
-              $scope.idComite,
-              {
-                headers: {
-                  Accept: '*/*',
-                  'Content-Type': 'application/json',
-                  Authorization: 'Bearer ' + $scope.token,
+            .get(APP_DEFAULT_URL.url + 'comite/committee', {
+              headers: {
+                Accept: '*/*',
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + $scope.token,
 
-                  'Access-Control-Allow-Origin': 'http://localhost:8080',
-                  'Access-Control-Allow-Methods': '*',
-                  'Access-Control-Allow-Headers': 'Content-Type',
-                  'Access-Control-Allow-Headers': 'Authorization',
-                },
-              }
-            )
-            .then(function (response2) {
-              $scope.peticiones = response2.data;
+                'Access-Control-Allow-Origin': 'http://localhost:8080',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Headers': 'Authorization',
+              },
+            })
+            .then(function (response) {
+              $scope.infoSesion = response.data;
+
+              $scope.idComite = {
+                id: $scope.infoSesion.id
+              };
+
+              $http
+                .post(
+                  APP_DEFAULT_URL.url + 'comite/application/committee',
+                  $scope.idComite, {
+                    headers: {
+                      Accept: '*/*',
+                      'Content-Type': 'application/json',
+                      Authorization: 'Bearer ' + $scope.token,
+
+                      'Access-Control-Allow-Origin': 'http://localhost:8080',
+                      'Access-Control-Allow-Methods': '*',
+                      'Access-Control-Allow-Headers': 'Content-Type',
+                      'Access-Control-Allow-Headers': 'Authorization',
+                    },
+                  }
+                )
+                .then(function (response2) {
+                  $scope.peticiones = response2.data;
+                });
             });
-        });
+
+        } else {
+          $window.location.href = "#/";
+
+
+        }
+      } else {
+        $window.location.href = "#/";
+
+      }
     };
 
     $scope.registrarPeticion = function () {
@@ -66,13 +87,14 @@ app.controller(
         .then(function (response) {
           $scope.infoSesion = response.data;
 
-          $scope.peticionData.committee = { id: $scope.infoSesion.id };
+          $scope.peticionData.committee = {
+            id: $scope.infoSesion.id
+          };
 
           $http
             .post(
               APP_DEFAULT_URL.url + 'comite/application',
-              $scope.peticionData,
-              {
+              $scope.peticionData, {
                 headers: {
                   Accept: '*/*',
                   'Content-Type': 'application/json',
@@ -129,13 +151,14 @@ app.controller(
         .then(function (response2) {
           $scope.infoSesion = response2.data;
 
-          $scope.actualizarData.committee = { id: $scope.infoSesion.id };
+          $scope.actualizarData.committee = {
+            id: $scope.infoSesion.id
+          };
 
           $http
             .put(
               APP_DEFAULT_URL.url + 'comite/application',
-              $scope.actualizarData,
-              {
+              $scope.actualizarData, {
                 headers: {
                   Accept: '*/*',
                   'Content-Type': 'application/json',
@@ -171,25 +194,42 @@ app.controller(
     };
 
     $scope.getInfo = function () {
-      $scope.petiData = {
-        id: $window.localStorage.getItem('idAppComite'),
-      };
-      $http
-        .post(APP_DEFAULT_URL.url + 'comite/application/one', $scope.petiData, {
-          headers: {
-            Accept: '*/*',
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + $scope.token,
 
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
-            'Access-Control-Allow-Methods': '*',
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Allow-Headers': 'Authorization',
-          },
-        })
-        .then(function (response) {
-          $scope.peticionActual = response.data;
-        });
+      $scope.token = JSON.parse($window.localStorage.getItem("token"));
+
+      if ($scope.token != null) {
+        $scope.sesion = $scope.desconversion($scope.token);
+        console.log($scope.sesion);
+        if ($scope.sesion.role == "Comité") {
+
+          $scope.petiData = {
+            id: $window.localStorage.getItem('idAppComite'),
+          };
+          $http
+            .post(APP_DEFAULT_URL.url + 'comite/application/one', $scope.petiData, {
+              headers: {
+                Accept: '*/*',
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + $scope.token,
+
+                'Access-Control-Allow-Origin': 'http://localhost:8080',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Headers': 'Authorization',
+              },
+            })
+            .then(function (response) {
+              $scope.peticionActual = response.data;
+            });
+
+        } else {
+          $window.location.href = "#/";
+
+        }
+      } else {
+        $window.location.href = "#/";
+
+      }
     };
 
     $scope.getComentarios = function () {
@@ -202,8 +242,7 @@ app.controller(
       $http
         .post(
           APP_DEFAULT_URL.url + 'comite/application/comentario',
-          $scope.revisar,
-          {
+          $scope.revisar, {
             headers: {
               Accept: '*/*',
               'Content-Type': 'application/json',
@@ -227,7 +266,9 @@ app.controller(
       console.log($scope.mensajitoDos);
 
       $scope.addCommentTo = {
-        application: { id: $window.localStorage.getItem('idAppComite') },
+        application: {
+          id: $window.localStorage.getItem('idAppComite')
+        },
         message: $scope.mensajitoDos.message,
       };
 
@@ -237,8 +278,7 @@ app.controller(
       $http
         .post(
           APP_DEFAULT_URL.url + 'comite/application/comment',
-          $scope.addCommentTo,
-          {
+          $scope.addCommentTo, {
             headers: {
               Accept: '*/*',
               'Content-Type': 'application/json',
@@ -252,9 +292,11 @@ app.controller(
           }
         )
         .then(function (response) {
+          console.log(response);
           if (response.data.statusCode == 200) {
             Swal.fire('Exito', 'Registro correcto', 'success');
-            $scope.addCommentTo.message = {};
+            $scope.addCommentTo = {};
+            $scope.nuevoCommentComite={};
             $scope.getComentarios();
             $('#CerrarCrear').click();
           } else {
@@ -284,9 +326,9 @@ app.controller(
           },
         })
         .then(function (response) {
-			let estados = response.data;
-		  estados.splice(0,2);
-		  $scope.estaditos=estados;
+          let estados = response.data;
+          estados.splice(0, 2);
+          $scope.estaditos = estados;
         });
     };
 
@@ -316,7 +358,7 @@ app.controller(
           Swal.fire('Exito', 'Eliminación correcta', 'success');
           $('#CerrarEliminar').click();
           $scope.getPeticiones();
-		  $scope.getInfo();
+          $scope.getInfo();
         } else {
           Swal.fire(
             'Advertencia',

@@ -110,7 +110,7 @@ app.config(function ($routeProvider) {
 			controller: 'comiteController'
 		})
 		.when('/comite/comentario', {
-			templateUrl: 'resources/views/Comite/comite.html',
+			templateUrl: 'resources/views/Comite/comentario.html',
 			controller: 'comiteController'
 		})
 		.when('/enlace/comite', { //rutas enlace
