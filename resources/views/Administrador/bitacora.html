@@ -1,0 +1,59 @@
+ <!-- BODY -->
+
+
+ <div class="page-header header-filter" data-parallax="true"
+ style="background-image: url('./material-kit-master/assets/img/bgMorelos2.jpg')">
+ <div class="container">
+     <div class="row">
+         <div class="col-md-8 ml-auto mr-auto">
+             <div class="brand text-center">
+                 <h1>Comité Vecinal</h1>
+                 <h3 class="title text-center">Estado de Morelos</h3>
+             </div>
+         </div>
+     </div>
+ </div>
+</div>
+
+<div class="main main-raised">
+ <div class="container">
+
+     <h2 style="padding-top: 20px;" class="title text-primary text-center">Bitácoras</h2>
+
+     <div class="row" ng-init="getLogBook()">
+         <div class="col-md-12">
+             <table class="table table-responsive-md table-hover" >
+                 <thead class="table-primary">
+                     <tr>
+                         <th scope="col">Ruta de la petición</th>
+                         <th scope="col">Método</th>
+                         <th scope="col">Solicitante</th>
+                         <th scope="col">Dirección IP</th>
+                         <th scope="col">Fecha y hora</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                    <tr ng-repeat="logbook in logbooks">
+                         <td>{{logbook.uri}}</td>
+                         <td>{{logbook.method}}</td>
+                         <td>{{logbook.sender}}</td>
+                         <td>{{logbook.senderIP}}</td>
+                         <td>{{logbook.date}}</td>
+                     </tr>
+                     
+                 </tbody>
+             </table>
+         </div>
+     </div>
+
+     <div class="info"></div>
+ </div>
+</div>
+
+<!-- FIN BODY -->
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>

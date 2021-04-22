@@ -1,0 +1,215 @@
+ <!-- BODY -->
+
+
+ <div class="page-header header-filter" data-parallax="true"
+ style="background-image: url('./material-kit-master/assets/img/bgMorelos2.jpg')">
+ <div class="container">
+     <div class="row">
+         <div class="col-md-8 ml-auto mr-auto">
+             <div class="brand text-center">
+                 <h1>Comité Vecinal</h1>
+                 <h3 class="title text-center">Estado de Morelos</h3>
+             </div>
+         </div>
+     </div>
+ </div>
+</div>
+
+<div class="main main-raised">
+ <div class="container">
+
+     <h2 style="padding-top: 20px;" class="title text-primary text-center">Comités Vecinales</h2>
+     <button class="btn btn-rose btn-round btn-md" data-toggle="modal" data-target="#crearModal"> <i
+             class="material-icons">add_circle_outline</i> Registrar nuevo comité vecinal
+     </button>
+
+
+     <div class="row">
+         <div class="col-md-12" ng-init="getCommittees()">
+             <table class="table table-responsive-md table-hover">
+                 <thead class="table-primary">
+                     <tr>
+                         <th scope="col">Alias</th>
+                         <th scope="col">Municipio</th>
+                         <th scope="col">Miembros</th>
+                         <th scope="col" class="text-center">Acciones</th>
+
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <tr ng-repeat="comite in comites">
+                         <th>{{comite.alias}}</th>
+                         <td>{{comite.municipality}}</td>
+                         <td> 
+                             <ul ng-repeat="miembro in comite.members">
+                                <li><div>{{miembro.name}} {{miembro.lastname}}</div></li>
+                             </ul>
+                         </td>
+                         <td>
+                             <div class="row">
+                                 
+                                 <div class="col-md-3">
+                                     <button type="button" class="btn btn-warning btn-round btn-sm"
+                                         data-toggle="modal" ng-click="EditarCommittee(comite)"> <i
+                                             class="material-icons">edit</i> Editar
+                                     </button>
+                                 </div>
+                                 
+                                 <div class="col-md-3">
+                                     <button type="button" class="btn btn-danger btn-round btn-sm"
+                                         data-toggle="modal" ng-click="BorrarComite(comite.id)"> <i
+                                             class="material-icons">delete_forever</i> Eliminar </button>
+                                 </div>
+                                
+                                 <div class="col-md-3">
+                                     <button type="button" class="btn btn-primary btn-round btn-sm"
+                                         data-toggle="modal" ng-click="AgregarMiembro(comite)"> <i
+                                             class="material-icons">add_circle_outline</i> Agregar Miembros </button>
+                                 </div>
+                             </div>
+                         </td>
+                     </tr>
+                 
+                 </tbody>
+             </table>
+         </div>
+     </div>
+
+     <div class="info"></div>
+ </div>
+</div>
+
+<!-- FIN BODY -->
+
+<!-- CREAR MODAL -->
+
+<div style="margin-top: 80px;" class="modal fade" id="crearModal" tabindex="-1" role="dialog"
+ aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog modal-lg" role="document">
+     <div class="modal-content">
+
+         <div class="modal-header">
+             <h2 class="modal-title text-primary title" id="exampleModalLabel">Registrar nuevo comité</h2>
+             <button type="button" class="close" id="CerrarCrear"  data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+
+         <form ng-submit="registrarNuevoComite()">
+
+             <div class="modal-body">
+                 <h3 class="subtitle text-primary">Datos del Comité Vecinal</h3>
+                 <div class="form-row">
+                     <div class="form-group col-md-6">
+                         <label for="inputEmail4">Alias</label>
+                         <input type="text" onkeypress="return soloLetras(event)"  required class="form-control" id="alias" placeholder="DSE" maxlength="5" minlength="3" ng-model="comiteData.alias">
+                     </div>
+                    <div class="form-group col-md-6">
+                         <label for="Municipio">
+                             Delegación / Municipio al que pertenece</label>
+                             <select id="Municipio" class="form-control" ng-model="comiteData.municipality" required>
+                             <option value="" selected>Elije una opcion</option>
+                             <option ng-repeat="municipio in municipiosMor.response.municipios" value="{{municipio}}">{{municipio}}</option>
+
+                         </select>
+                     
+                    </div>
+                    {{comiteData}}
+                 </div>
+                
+             </div>
+
+             <div class="modal-footer">
+                 <button id="falloBtn" type="button" class="btn btn-primary btn-link"
+                     data-dismiss="modal">Cancelar</button>
+                 <button id="exitoBtn" type="submit" class="btn btn-primary btn-round"><i
+                         class="material-icons">check</i>Registrar comité</button>
+             </div>
+         </form>
+     </div>
+ </div>
+</div>
+
+<!-- FIN CREAR MODAL -->
+
+<!-- EDITAR MODAL -->
+
+<div style="margin-top: 80px;" class="modal fade" id="editarModal" tabindex="-1" role="dialog"
+ aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog modal-lg" role="document">
+     <div class="modal-content">
+
+         <div class="modal-header">
+             <h2 class="modal-title text-primary title" id="exampleModalLabel">Editar comité</h2>
+             <button type="button" id="CerrarEditar" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+
+         <form ng-submit="editarComiteData()">
+
+             <div class="modal-body">
+                 <h3 class="subtitle text-primary">Datos del Comité Vecinal</h3>
+                 <div class="form-row">
+                     <div class="form-group col-md-6">
+                         <label for="inputEmail4">Alias</label>
+                         <input type="text" maxlength="5" minlength="3" onkeypress="return soloLetras(event)" required class="form-control" id="alias" placeholder="DSA" ng-model="editarComite.alias">
+
+                        </div>
+                     <div class="form-group col-md-6">
+                         <label for="Municipio">
+                             Delegación / Municipio al que pertenece</label>
+                             <select id="Municipio" class="form-control" ng-model="editarComite.municipality" required 
+                            ng-options="municipio as municipio for municipio in municipiosMor.response.municipios" >
+                            <option value="">--Elige opcion--</option>
+                            </select>
+
+                     </div>
+                 </div>
+                
+             </div>
+
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">Cancelar</button>
+                 <button type="submit" id="exitoBtn" class="btn btn-primary btn-round"><i
+                         class="material-icons">check</i>Guardar cambios</button>
+             </div>
+         </form>
+     </div>
+ </div>
+</div>
+
+<!-- FIN EDITAR MODAL -->
+
+<!-- ELIMINAR MODAL -->
+
+<div style="margin-top: 80px;" class="modal fade" id="borrarModal" tabindex="-1" role="dialog"
+ aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog" role="document">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h3 class="modal-title text-primary title" id="exampleModalLabel">Eliminar comité</h3>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+         <div class="modal-body">
+             ¿Está seguro que desea eliminar este registro?
+         </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">Cancelar</button>
+             <button id="exitoBtn" type="submit" data-dismiss="modal" class="btn btn-danger btn-round" ng-click="deleteComite()"><i
+                     class="material-icons">delete_forever</i>
+                 Eliminar</button>
+         </div>
+     </div>
+ </div>
+</div>
+
+<!-- FIN ELIMINAR MODAL-->
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
